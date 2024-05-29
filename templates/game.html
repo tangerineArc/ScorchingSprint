@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Game
+{% endblock %}
+
+{% block main %}
+
+    <div id="sprite-container">
+        <img src="static/tempSprite.png" alt="" id="sprite">
+        <img src="static/tempObstacle.png" alt="" id="obstacle">
+    </div>
+
+    <p id="gameOverText">Game Over</p>
+    <button id="playButton">Play</button>
+    <button id="pauseButton">Pause</button>
+    <button id="resumeButton">Resume</button>
+
+{% endblock %}
