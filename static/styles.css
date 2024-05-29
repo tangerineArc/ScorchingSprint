@@ -1,6 +1,10 @@
+body {
+    user-select: none;
+}
+
 #sprite-container {
-    width: 500px;
-    height: 200px;
+    width: 800px;
+    height: 300px;
     border: 1px solid black;
     margin: auto;
 }
@@ -9,32 +13,32 @@
     width: 50px;
     height: 50px;
     position: relative;
-    top: 150px;
+    top: 250px;
 }
 
 @keyframes jump {
-    0%{top: 150px;}
-    30%{top: 100px;}
-    70%{top: 100px;}
-    100%{top: 150px;}
+    0%{top: 250px;}
+    30%{top: 120px;}
+    70%{top: 120px;}
+    100%{top: 250px;}
 }
 
 .animate {
-    animation: jump 300ms linear;
+    animation: jump 500ms linear;
 }
 
 @keyframes slide {
-    0%{left: 500px} 
-    100%{left: -20px}
+    0%{left: 700px} 
+    100%{left: -80px}
 }
 
 #obstacle {
     width: 20px;
     height: 20px;
     position: relative;
-    top: 130px;
-    left: 480px;
-    animation: slide 1s infinite linear;
+    top: 240px;
+    left: 700px;
+    animation: slide 2s infinite linear;
     animation-play-state: paused;
 }
 

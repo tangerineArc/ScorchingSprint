@@ -2,11 +2,13 @@ let playButton = document.getElementById("playButton")
 let pauseButton = document.getElementById("pauseButton")
 let resumeButton = document.getElementById("resumeButton")
 let obstacle = document.getElementById("obstacle")
+let sprite = document.getElementById("sprite")
+let isGameRunning = false
 
 document.querySelector("#playButton").addEventListener("click", function() {
     obstacle.style.animation = "none"
     obstacle.offsetLeft
-    obstacle.style.animation = "slide 1s infinite linear"
+    obstacle.style.animation = "slide 2s infinite linear"
     obstacle.style.animationPlayState = "running"
 
     gameOverText.style.display = "none"
@@ -14,6 +16,8 @@ document.querySelector("#playButton").addEventListener("click", function() {
     playButton.style.display = "none"
 
     pauseButton.style.display = "inline"
+
+    isGameRunning = true
 })
 
 document.querySelector("#pauseButton").addEventListener("click", function() {
@@ -22,6 +26,8 @@ document.querySelector("#pauseButton").addEventListener("click", function() {
     pauseButton.style.display = "none"
 
     resumeButton.style.display = "inline"
+
+    isGameRunning = false
 })
 
 document.querySelector("#resumeButton").addEventListener("click", function() {
@@ -30,18 +36,21 @@ document.querySelector("#resumeButton").addEventListener("click", function() {
     pauseButton.style.display = "inline"
 
     resumeButton.style.display = "none"
+
+    isGameRunning = true
 })
 
 
-let sprite = document.getElementById("sprite")
-document.addEventListener("click", jump);
-function jump() {
-    if (sprite.classList == "animate") {
+document.addEventListener("keydown", jump);
+function jump(event) {
+    if (sprite.classList == "animate" || !isGameRunning) {
         return
     }
 
-    sprite.classList.add("animate")
-    setTimeout(removeJump, 300)
+    if (event.key === "ArrowUp") {
+        sprite.classList.add("animate")
+        setTimeout(removeJump, 500)
+    }
 }
 function removeJump() {
     sprite.classList.remove("animate")
@@ -49,23 +58,21 @@ function removeJump() {
 
 
 let gameOverText = document.getElementById("gameOverText")
-let gameOverCount = 0
 function gameOver() {
     let spriteTop = parseInt(window.getComputedStyle(sprite).getPropertyValue("top"))
     let obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("left"))
 
-    if (obstacleLeft < 20 && obstacleLeft > -20 && spriteTop >= 100) {
+    if (obstacleLeft < -5 && obstacleLeft > -50 && spriteTop > 190) {
         gameOverText.style.display = "inline"
         obstacle.style.animationPlayState = "paused"
         pauseButton.style.display = "none"
         playButton.style.display = "inline"
         playButton.textContent = "Play Again"
-        gameOverCount ++
+        isGameRunning = false
         return
     }
 }
 
-
-if (!gameOverCount) {
+if (!isGameRunning) {
     setInterval(gameOver, 10);
 }
