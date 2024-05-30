@@ -5,7 +5,7 @@ let obstacle = document.getElementById("obstacle")
 let sprite = document.getElementById("sprite")
 let isGameRunning = false
 
-document.querySelector("#playButton").addEventListener("click", function() {
+document.querySelector("#playButton").addEventListener("click", function() {    
     obstacle.style.animation = "none"
     obstacle.offsetLeft
     obstacle.style.animation = "slide 2s infinite linear"
@@ -18,6 +18,9 @@ document.querySelector("#playButton").addEventListener("click", function() {
     pauseButton.style.display = "inline"
 
     isGameRunning = true
+
+    setInterval(gameOver, 10);
+    setInterval(randomizeObstacle, 10);
 })
 
 document.querySelector("#pauseButton").addEventListener("click", function() {
@@ -38,6 +41,9 @@ document.querySelector("#resumeButton").addEventListener("click", function() {
     resumeButton.style.display = "none"
 
     isGameRunning = true
+
+    setInterval(gameOver, 10);
+    setInterval(randomizeObstacle, 10);
 })
 
 
@@ -62,7 +68,7 @@ function gameOver() {
     let spriteTop = parseInt(window.getComputedStyle(sprite).getPropertyValue("top"))
     let obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("left"))
 
-    if (obstacleLeft < -5 && obstacleLeft > -50 && spriteTop > 190) {
+    if (obstacleLeft < -6 && obstacleLeft > -50 && spriteTop > 190 && isGameRunning) {
         gameOverText.style.display = "inline"
         obstacle.style.animationPlayState = "paused"
         pauseButton.style.display = "none"
@@ -73,6 +79,15 @@ function gameOver() {
     }
 }
 
-if (!isGameRunning) {
-    setInterval(gameOver, 10);
+
+let obstacleTopPositions = ["240px", "220px", "250px", "230px", "260px"]
+function randomizeObstacle() {
+    let obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("left"))
+    if (obstacleLeft <= -70) {
+        let idx = Math.floor(Math.random() * 7)
+        obstacle.style.top = obstacleTopPositions[idx]
+        obstacle.style.display = "none";
+    } else {
+        obstacle.style.display = "inline";
+    }
 }
