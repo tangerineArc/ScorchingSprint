@@ -3,7 +3,12 @@ let pauseButton = document.getElementById("pauseButton")
 let resumeButton = document.getElementById("resumeButton")
 let obstacle = document.getElementById("obstacle")
 let sprite = document.getElementById("sprite")
+let scoreText = document.getElementById("scoreText")
+let gameOverText = document.getElementById("gameOverText")
+
 let isGameRunning = false
+let score = 0
+let obstacleTopPositions = ["240px", "220px", "250px", "230px", "260px", "210px", "215px", "225px", "235px", "240px", "245px", "255px"]
 
 document.querySelector("#playButton").addEventListener("click", function() {
     obstacle.style.animation = "none"
@@ -19,9 +24,13 @@ document.querySelector("#playButton").addEventListener("click", function() {
     pauseButton.style.display = "inline"
 
     isGameRunning = true
+    score = 0
 
-    setInterval(gameOver, 10)
-    setInterval(randomizeObstacle, 10)
+    if (playButton.textContent == "Play") {
+        setInterval(gameOver, 10)
+        setInterval(randomizeObstacle, 10)
+        setInterval(scoreKeeper, 500)
+    }
 })
 
 document.querySelector("#pauseButton").addEventListener("click", function() {
@@ -42,9 +51,6 @@ document.querySelector("#resumeButton").addEventListener("click", function() {
     resumeButton.style.display = "none"
 
     isGameRunning = true
-
-    setInterval(gameOver, 10)
-    setInterval(randomizeObstacle, 10)
 })
 
 
@@ -64,7 +70,6 @@ function removeJump() {
 }
 
 
-let gameOverText = document.getElementById("gameOverText")
 function gameOver() {
     let spriteTop = parseInt(window.getComputedStyle(sprite).getPropertyValue("top"))
     let obstacleTop = parseInt(window.getComputedStyle(obstacle).getPropertyValue("top"))
@@ -81,20 +86,21 @@ function gameOver() {
         playButton.textContent = "Play Again"
 
         isGameRunning = false
-        return
+        score = 0
     }
 }
 
 
-let obstacleTopPositions = ["240px", "220px", "250px", "230px", "260px", "210px"]
 function randomizeObstacle() {
     let obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("left"))
     if (isGameRunning) {
         if (obstacleLeft <= -70) {
-            let idx = Math.floor(Math.random() * 7)
+            // randomize obstacle vertical position
+            let idx = Math.floor(Math.random() * 12)
             obstacle.style.top = obstacleTopPositions[idx]
             obstacle.style.opacity = "0"
 
+            // randomize obstacle appearance time
             let delay = 5 + Math.floor(Math.random() * 6)
             obstacle.style.animationPlayState = "paused"
             obstacle.style.animation = "none"
@@ -104,5 +110,12 @@ function randomizeObstacle() {
         else if (obstacleLeft <= 730) {
             obstacle.style.opacity = "1"
         }
+    }
+}
+
+function scoreKeeper() {
+    if (isGameRunning) {
+        score += 10
+        scoreText.textContent = `Score: ${score}`
     }
 }
