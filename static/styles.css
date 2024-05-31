@@ -3,24 +3,24 @@ body {
 }
 
 #sprite-container {
-    width: 800px;
-    height: 300px;
+    width: 1650px;
+    height: 600px;
     border: 1px solid black;
     margin: auto;
 }
 
 #sprite {
-    width: 50px;
-    height: 50px;
+    width: auto;
+    height: 150px;
     position: relative;
-    top: 250px;
+    top: 450px;
 }
 
 @keyframes jump {
-    0%{top: 250px;}
-    30%{top: 120px;}
-    70%{top: 120px;}
-    100%{top: 250px;}
+    0%{top: 400px;}
+    30%{top: 100px;}
+    70%{top: 100px;}
+    100%{top: 400px;}
 }
 
 .animate {
@@ -33,11 +33,11 @@ body {
 }
 
 #obstacle {
-    width: 20px;
-    height: 20px;
+    width: auto;
+    height: 150px;
     position: relative;
-    top: 240px;
-    left: 850px;
+    top: 400px;
+    left: 1600px;
     animation: slide 2s linear 2s infinite;
     opacity: 0;
     animation-play-state: paused;

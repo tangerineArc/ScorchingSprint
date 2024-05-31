@@ -8,12 +8,16 @@ let gameOverText = document.getElementById("gameOverText")
 
 let isGameRunning = false
 let score = 0
-let obstacleTopPositions = ["240px", "220px", "250px", "230px", "260px", "210px", "215px", "225px", "235px", "240px", "245px", "255px"]
+let obstacleTopPositions = ["300px", "350px", "400px", "450px", "325px", "375px", "425px", "475px", "275px", "250px"]
 
 document.querySelector("#playButton").addEventListener("click", function() {
+    sprite.src = "static/runningDino.gif"
+
+    // reset animation
     obstacle.style.animation = "none"
     obstacle.offsetLeft
-    obstacle.style.animation = "slide 2s linear 2s infinite"
+    let delay = 5 + Math.floor(Math.random() * 6)
+    obstacle.style.animation = `slide 2s linear ${delay}s infinite`
     obstacle.style.animationPlayState = "running"
     obstacle.style.opacity = "0"
 
@@ -29,7 +33,7 @@ document.querySelector("#playButton").addEventListener("click", function() {
     if (playButton.textContent == "Play") {
         setInterval(gameOver, 10)
         setInterval(randomizeObstacle, 10)
-        setInterval(scoreKeeper, 500)
+        setInterval(scoreKeeper, 100)
     }
 })
 
@@ -40,6 +44,8 @@ document.querySelector("#pauseButton").addEventListener("click", function() {
 
     resumeButton.style.display = "inline"
 
+    sprite.src = "static/standingDino.png"
+
     isGameRunning = false
 })
 
@@ -49,6 +55,8 @@ document.querySelector("#resumeButton").addEventListener("click", function() {
     pauseButton.style.display = "inline"
 
     resumeButton.style.display = "none"
+
+    sprite.src = "static/runningDino.gif"
 
     isGameRunning = true
 })
@@ -61,21 +69,30 @@ function jump(event) {
     }
 
     if (event.key === "ArrowUp") {
+        sprite.src = "static/standingDino.png"
         sprite.classList.add("animate")
-        setTimeout(removeJump, 500)
+        setTimeout(removeJump, 480)
     }
 }
 function removeJump() {
     sprite.classList.remove("animate")
+    if (isGameRunning) {
+        sprite.src = "static/runningDino.gif"
+    }
 }
 
 
 function gameOver() {
     let spriteTop = parseInt(window.getComputedStyle(sprite).getPropertyValue("top"))
+    let spriteLeft = parseInt(window.getComputedStyle(sprite).getPropertyValue("left"))
+    let spriteWidth = parseInt(window.getComputedStyle(sprite).getPropertyValue("width"))
+    let spriteHeight = parseInt(window.getComputedStyle(sprite).getPropertyValue("height"))
+
     let obstacleTop = parseInt(window.getComputedStyle(obstacle).getPropertyValue("top"))
     let obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("left"))
 
-    if (obstacleLeft < -6 && obstacleLeft > -50 && obstacleTop > (spriteTop - 20) && obstacleTop < (spriteTop + 80) && isGameRunning) {
+    if (obstacleLeft < (spriteLeft + spriteWidth) && obstacleLeft > spriteLeft &&
+        obstacleTop > spriteTop && obstacleTop < (spriteTop + spriteHeight) && isGameRunning) {
         gameOverText.style.display = "inline"
 
         obstacle.style.animationPlayState = "paused"
@@ -85,6 +102,8 @@ function gameOver() {
         playButton.style.display = "inline"
         playButton.textContent = "Play Again"
 
+        sprite.src = "static/standingDino.png"
+
         isGameRunning = false
         score = 0
     }
@@ -93,8 +112,9 @@ function gameOver() {
 
 function randomizeObstacle() {
     let obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("left"))
+    let spriteLeft = parseInt(window.getComputedStyle(sprite).getPropertyValue("left"))
     if (isGameRunning) {
-        if (obstacleLeft <= -70) {
+        if (obstacleLeft < spriteLeft) {
             // randomize obstacle vertical position
             let idx = Math.floor(Math.random() * 12)
             obstacle.style.top = obstacleTopPositions[idx]
@@ -107,7 +127,7 @@ function randomizeObstacle() {
             obstacle.offsetLeft
             obstacle.style.animation = `slide 2s linear ${delay}s infinite`
         }
-        else if (obstacleLeft <= 730) {
+        else if (obstacleLeft <= 1600) {
             obstacle.style.opacity = "1"
         }
     }
@@ -115,7 +135,7 @@ function randomizeObstacle() {
 
 function scoreKeeper() {
     if (isGameRunning) {
-        score += 10
+        score += 2
         scoreText.textContent = `Score: ${score}`
     }
 }
