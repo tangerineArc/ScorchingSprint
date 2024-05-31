@@ -28,7 +28,8 @@ body {
 }
 
 @keyframes slide {
-    0%{left: 700px} 
+    0%{left: 850px}
+    /* 50%{left: 850px} */
     100%{left: -80px}
 }
 
@@ -37,8 +38,9 @@ body {
     height: 20px;
     position: relative;
     top: 240px;
-    left: 700px;
-    animation: slide 2s infinite linear;
+    left: 850px;
+    animation: slide 2s linear 2s infinite;
+    opacity: 1;
     animation-play-state: paused;
 }
 

@@ -5,11 +5,12 @@ let obstacle = document.getElementById("obstacle")
 let sprite = document.getElementById("sprite")
 let isGameRunning = false
 
-document.querySelector("#playButton").addEventListener("click", function() {    
+document.querySelector("#playButton").addEventListener("click", function() {
     obstacle.style.animation = "none"
     obstacle.offsetLeft
-    obstacle.style.animation = "slide 2s infinite linear"
+    obstacle.style.animation = "slide 2s linear 2s infinite"
     obstacle.style.animationPlayState = "running"
+    obstacle.style.opacity = "0"
 
     gameOverText.style.display = "none"
 
@@ -19,8 +20,8 @@ document.querySelector("#playButton").addEventListener("click", function() {
 
     isGameRunning = true
 
-    setInterval(gameOver, 10);
-    setInterval(randomizeObstacle, 10);
+    setInterval(gameOver, 10)
+    setInterval(randomizeObstacle, 10)
 })
 
 document.querySelector("#pauseButton").addEventListener("click", function() {
@@ -42,8 +43,8 @@ document.querySelector("#resumeButton").addEventListener("click", function() {
 
     isGameRunning = true
 
-    setInterval(gameOver, 10);
-    setInterval(randomizeObstacle, 10);
+    setInterval(gameOver, 10)
+    setInterval(randomizeObstacle, 10)
 })
 
 
@@ -66,28 +67,42 @@ function removeJump() {
 let gameOverText = document.getElementById("gameOverText")
 function gameOver() {
     let spriteTop = parseInt(window.getComputedStyle(sprite).getPropertyValue("top"))
+    let obstacleTop = parseInt(window.getComputedStyle(obstacle).getPropertyValue("top"))
     let obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("left"))
 
-    if (obstacleLeft < -6 && obstacleLeft > -50 && spriteTop > 190 && isGameRunning) {
+    if (obstacleLeft < -6 && obstacleLeft > -50 && obstacleTop > (spriteTop - 20) && obstacleTop < (spriteTop + 80) && isGameRunning) {
         gameOverText.style.display = "inline"
+
         obstacle.style.animationPlayState = "paused"
+
         pauseButton.style.display = "none"
+
         playButton.style.display = "inline"
         playButton.textContent = "Play Again"
+
         isGameRunning = false
         return
     }
 }
 
 
-let obstacleTopPositions = ["240px", "220px", "250px", "230px", "260px"]
+let obstacleTopPositions = ["240px", "220px", "250px", "230px", "260px", "210px"]
 function randomizeObstacle() {
     let obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("left"))
-    if (obstacleLeft <= -70) {
-        let idx = Math.floor(Math.random() * 7)
-        obstacle.style.top = obstacleTopPositions[idx]
-        obstacle.style.display = "none";
-    } else {
-        obstacle.style.display = "inline";
+    if (isGameRunning) {
+        if (obstacleLeft <= -70) {
+            let idx = Math.floor(Math.random() * 7)
+            obstacle.style.top = obstacleTopPositions[idx]
+            obstacle.style.opacity = "0"
+
+            let delay = 5 + Math.floor(Math.random() * 6)
+            obstacle.style.animationPlayState = "paused"
+            obstacle.style.animation = "none"
+            obstacle.offsetLeft
+            obstacle.style.animation = `slide 2s linear ${delay}s infinite`
+        }
+        else if (obstacleLeft <= 730) {
+            obstacle.style.opacity = "1"
+        }
     }
 }
