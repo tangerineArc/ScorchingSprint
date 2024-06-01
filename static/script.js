@@ -8,10 +8,10 @@ let gameOverText = document.getElementById("gameOverText")
 
 let isGameRunning = false
 let score = 0
-let obstacleTopPositions = ["300px", "350px", "400px", "450px", "325px", "375px", "425px", "475px", "275px", "250px"]
+let obstacleTopPositions = ["300px", "350px", "400px", "450px", "325px", "375px", "425px", "275px", "250px"]
 
 document.querySelector("#playButton").addEventListener("click", function() {
-    sprite.src = "static/runningDino.gif"
+    sprite.src = "static/graphics/runningDino.gif"
 
     // reset animation
     obstacle.style.animation = "none"
@@ -44,7 +44,7 @@ document.querySelector("#pauseButton").addEventListener("click", function() {
 
     resumeButton.style.display = "inline"
 
-    sprite.src = "static/standingDino.png"
+    sprite.src = "static/graphics/standingDino.png"
 
     isGameRunning = false
 })
@@ -56,7 +56,7 @@ document.querySelector("#resumeButton").addEventListener("click", function() {
 
     resumeButton.style.display = "none"
 
-    sprite.src = "static/runningDino.gif"
+    sprite.src = "static/graphics/runningDino.gif"
 
     isGameRunning = true
 })
@@ -68,8 +68,8 @@ function jump(event) {
         return
     }
 
-    if (event.key === "ArrowUp") {
-        sprite.src = "static/standingDino.png"
+    if (event.key === "ArrowUp" || event.key === " " || event.key === "w" || event.key === "W") {
+        sprite.src = "static/graphics/standingDino.png"
         sprite.classList.add("animate")
         setTimeout(removeJump, 480)
     }
@@ -77,22 +77,18 @@ function jump(event) {
 function removeJump() {
     sprite.classList.remove("animate")
     if (isGameRunning) {
-        sprite.src = "static/runningDino.gif"
+        sprite.src = "static/graphics/runningDino.gif"
     }
 }
 
 
 function gameOver() {
     let spriteTop = parseInt(window.getComputedStyle(sprite).getPropertyValue("top"))
-    let spriteLeft = parseInt(window.getComputedStyle(sprite).getPropertyValue("left"))
-    let spriteWidth = parseInt(window.getComputedStyle(sprite).getPropertyValue("width"))
-    let spriteHeight = parseInt(window.getComputedStyle(sprite).getPropertyValue("height"))
 
     let obstacleTop = parseInt(window.getComputedStyle(obstacle).getPropertyValue("top"))
     let obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("left"))
 
-    if (obstacleLeft < (spriteLeft + spriteWidth) && obstacleLeft > spriteLeft &&
-        obstacleTop > spriteTop && obstacleTop < (spriteTop + spriteHeight) && isGameRunning) {
+    if (obstacleLeft < 0 && obstacleLeft > -300 && obstacleTop > (spriteTop - 80) && obstacleTop < spriteTop && isGameRunning) {
         gameOverText.style.display = "inline"
 
         obstacle.style.animationPlayState = "paused"
@@ -102,7 +98,7 @@ function gameOver() {
         playButton.style.display = "inline"
         playButton.textContent = "Play Again"
 
-        sprite.src = "static/standingDino.png"
+        sprite.src = "static/graphics/standingDino.png"
 
         isGameRunning = false
         score = 0
@@ -112,11 +108,11 @@ function gameOver() {
 
 function randomizeObstacle() {
     let obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("left"))
-    let spriteLeft = parseInt(window.getComputedStyle(sprite).getPropertyValue("left"))
+
     if (isGameRunning) {
-        if (obstacleLeft < spriteLeft) {
+        if (obstacleLeft < -500) {
             // randomize obstacle vertical position
-            let idx = Math.floor(Math.random() * 12)
+            let idx = Math.floor(Math.random() * 9)
             obstacle.style.top = obstacleTopPositions[idx]
             obstacle.style.opacity = "0"
 
@@ -127,7 +123,7 @@ function randomizeObstacle() {
             obstacle.offsetLeft
             obstacle.style.animation = `slide 2s linear ${delay}s infinite`
         }
-        else if (obstacleLeft <= 1600) {
+        else if (obstacleLeft < 1050) {
             obstacle.style.opacity = "1"
         }
     }

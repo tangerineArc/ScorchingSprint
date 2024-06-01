@@ -2,11 +2,10 @@ body {
     user-select: none;
 }
 
-#sprite-container {
+#game-container {
     width: 1650px;
     height: 600px;
-    border: 1px solid black;
-    margin: auto;
+    border-bottom: 1px solid black;
 }
 
 #sprite {
@@ -14,6 +13,7 @@ body {
     height: 150px;
     position: relative;
     top: 450px;
+    left: 50px;
 }
 
 @keyframes jump {
@@ -28,8 +28,8 @@ body {
 }
 
 @keyframes slide {
-    0%{left: 850px}
-    100%{left: -80px}
+    0%{left: 1050px}
+    100%{left: -600px}
 }
 
 #obstacle {
@@ -37,7 +37,7 @@ body {
     height: 150px;
     position: relative;
     top: 400px;
-    left: 1600px;
+    left: 1050px;
     animation: slide 2s linear 2s infinite;
     opacity: 0;
     animation-play-state: paused;
