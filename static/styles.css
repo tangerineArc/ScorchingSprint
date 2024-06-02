@@ -7,6 +7,7 @@ body {
     height: 600px;
     position: relative;
     overflow: hidden;
+    background-color: #f4f1de;
 }
 
 #sprite {
@@ -29,17 +30,17 @@ body {
 }
 
 @keyframes slide {
-    0%{left: 1600px}
+    0%{left: 2200px}
     100%{left: -40px}
 }
 
-#obstacle {
+#flyingObstacle {
     width: auto;
     height: 150px;
     position: absolute;
     top: 400px;
-    left: 1600px;
-    animation: slide 2s linear 2s infinite;
+    left: 2200px;
+    animation: slide 3s linear 2s infinite;
     opacity: 0;
     animation-play-state: paused;
 }
@@ -62,3 +63,39 @@ body {
     left: 1649px;
     top: 500px;
 }
+
+@keyframes cactusMovement {
+    0%{left: 1700px}
+    100%{left: -40px}
+}
+
+#fatCactusObstacle {
+    height: 120px;
+    width: auto;
+    position: absolute;
+    top: 450px;
+    left: 1700px;
+}
+
+/* #thickCactus2 {
+    height: 120px;
+    width: auto;
+    position: absolute;
+    top: 450px;
+    left: 1100px;
+}
+
+#thinCactus1 {
+    height: 120px;
+    width: auto;
+    position: absolute;
+    top: 450px;
+    left: 1600px;
+}
+#thinCactus2 {
+    height: 120px;
+    width: auto;
+    position: absolute;
+    top: 450px;
+    left: 1300px;
+} */
