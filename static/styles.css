@@ -8,6 +8,92 @@ body {
     position: relative;
     overflow: hidden;
     background-color: #f4f1de;
+    border-radius: 20px;
+}
+
+@keyframes cloudMovement {
+    0%{left: 1700px;}
+    100%{left: -250px;}
+}
+
+#cloud1 {
+    width: 200px;
+    height: auto;
+    position: absolute;
+    left: 1700px;
+    top: 100px;
+    animation: cloudMovement 30s linear 0s infinite;
+    animation-play-state: paused;
+}
+#cloud2 {
+    width: 200px;
+    height: auto;
+    position: absolute;
+    left: 1700px;
+    top: 50px;
+    animation: cloudMovement 30s linear 10s infinite;
+    animation-play-state: paused;
+}
+#cloud3 {
+    width: 200px;
+    height: auto;
+    position: absolute;
+    left: 1700px;
+    top: 100px;
+    animation: cloudMovement 30s linear 20s infinite;
+    animation-play-state: paused;
+}
+#cloud4 {
+    width: 200px;
+    height: auto;
+    position: absolute;
+    left: 1700px;
+    top: 150px;
+    animation: cloudMovement 30s linear 30s infinite;
+    animation-play-state: paused;
+}
+
+#scoreText {
+    position: absolute;
+    border: 2px solid black;
+    border-radius: 10px;
+    right: 50px;
+    top: 50px;
+    padding: 10px 20px 10px 20px;
+}
+
+#gameOverText {
+    position: absolute;
+    top: 50px;
+    left: 720px;
+    font-size: 50px;
+}
+
+#playButton {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    background-color: #f4f1de;
+}
+
+#pauseButton {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    background-color: #f4f1de;
+}
+
+#resumeButton {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    background-color: #f4f1de;
 }
 
 #sprite {
@@ -40,7 +126,7 @@ body {
     position: absolute;
     top: 400px;
     left: 2200px;
-    animation: slide 3s linear 2s infinite;
+    animation: slide 2s linear 2s infinite;
     opacity: 0;
     animation-play-state: paused;
 }
@@ -52,50 +138,30 @@ body {
 #ground1 {
     left: 0px;
     width: 1650px;
-    height: 100px;
+    height: auto;
     position: absolute;
-    top: 500px;
+    top: 570px;
 }
 #ground2 {
     width: 1650px;
-    height: 100px;
+    height: auto;
     position: absolute;
     left: 1649px;
-    top: 500px;
-}
-
-@keyframes cactusMovement {
-    0%{left: 1700px}
-    100%{left: -40px}
+    top: 570px;
 }
 
 #fatCactusObstacle {
     height: 120px;
     width: auto;
     position: absolute;
-    top: 450px;
+    top: 460px;
     left: 1700px;
 }
 
-/* #thickCactus2 {
+#largeCactusObstacle {
     height: 120px;
     width: auto;
     position: absolute;
-    top: 450px;
-    left: 1100px;
+    top: 460px;
+    left: 2000px;
 }
-
-#thinCactus1 {
-    height: 120px;
-    width: auto;
-    position: absolute;
-    top: 450px;
-    left: 1600px;
-}
-#thinCactus2 {
-    height: 120px;
-    width: auto;
-    position: absolute;
-    top: 450px;
-    left: 1300px;
-} */

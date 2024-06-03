@@ -7,9 +7,20 @@
 {% block main %}
 
     <div id="game-container">
+        <img src="static/graphics/cloud1.png" alt="" id="cloud1">
+        <img src="static/graphics/cloud2.png" alt="" id="cloud2">
+        <img src="static/graphics/cloud3.png" alt="" id="cloud3">
+        <img src="static/graphics/cloud4.png" alt="" id="cloud4">
+
+        <span id="scoreText">Score: 0</span>
+        <button id="playButton">Play</button>
+        <button id="pauseButton">Pause</button>
+        <button id="resumeButton">Resume</button>
+        <span id="gameOverText">Game Over</span>
+
         <span>
-            <img src="static/graphics/ground.png" alt="" id="ground1">
-            <img src="static/graphics/ground.png" alt="" id="ground2">
+            <img src="static/graphics/tempGround.png" alt="" id="ground1">
+            <img src="static/graphics/tempGround.png" alt="" id="ground2">
         </span>
 
         <img src="static/graphics/flyingObstacle.gif" alt="" id="flyingObstacle">
@@ -17,17 +28,8 @@
         <img src="static/graphics/standingDino.png" alt="" id="sprite">
 
         <img src="static/graphics/fatCactusObstacle.png" alt="" id="fatCactusObstacle">
-        <!-- <img src="static/graphics/largeCactus.png" alt="" id="thickCactus2"> -->
+        <img src="static/graphics/largeCactusObstacle.png" alt="" id="largeCactusObstacle">
         <!-- <img src="static/graphics/cactus.png" alt="" id="thinCactus1"> -->
-        <!-- <img src="static/graphics/cactus.png" alt="" id="thinCactus2"> -->
     </div>
-
-    <p id="gameOverText">Game Over</p>
-    <div>
-        <button id="playButton">Play</button>
-        <button id="pauseButton">Pause</button>
-        <button id="resumeButton">Resume</button>
-    </div>
-    <p id="scoreText">Score: 0</p>
 
 {% endblock %}
