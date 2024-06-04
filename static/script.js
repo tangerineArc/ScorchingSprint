@@ -1,6 +1,7 @@
 let playButton = document.getElementById("playButton")
 let pauseButton = document.getElementById("pauseButton")
 let resumeButton = document.getElementById("resumeButton")
+let resetButton = document.getElementById("resetButton")
 
 let flyingObstacle = document.getElementById("flyingObstacle")
 let sprite = document.getElementById("sprite")
@@ -45,6 +46,7 @@ document.querySelector("#playButton").addEventListener("click", function() {
     gameOverText.style.display = "none"
     playButton.style.display = "none"
     pauseButton.style.display = "inline"
+    resetButton.style.display = "inline"
 
     let cactusPos = 3000 + Math.floor(Math.random() * 1000)
     fatCactusObstacle.style.left = `${cactusPos}px`
@@ -95,6 +97,43 @@ document.querySelector("#resumeButton").addEventListener("click", function() {
 
     requestAnimationFrame(groundAnimation)
     requestAnimationFrame(cactusAnimation)
+})
+
+document.querySelector("#resetButton").addEventListener("click", function() {
+    // reset animation for flyingObstacle
+    flyingObstacle.style.animation = "none"
+    flyingObstacle.offsetLeft
+    flyingObstacle.style.animation = `slide 2s linear ${5 + Math.floor(Math.random() * 6)}s infinite`
+    flyingObstacle.style.animationPlayState = "paused"
+    flyingObstacle.style.opacity = "0"
+    flyingObstacle.style.top = flyingObstacleTopPositions[Math.floor(Math.random() * limit)]
+
+    // reset animation for clouds
+    let counter = 0
+    clouds.forEach((cloud) => {
+        cloud.style.animation = "none"
+        cloud.offsetLeft
+        cloud.style.animation = `cloudMovement 30s linear ${counter}s infinite`
+        counter += 10
+        cloud.style.animationPlayState = "paused"
+    })
+
+    gameOverText.style.display = "none"
+    playButton.style.display = "inline"
+    pauseButton.style.display = "none"
+    resumeButton.style.display = "none"
+    resetButton.style.display = "none"
+
+    sprite.src = "static/graphics/standingDino.png"
+
+    // reset animation for cactus
+    let cactusPos = 3000 + Math.floor(Math.random() * 1000)
+    fatCactusObstacle.style.left = `${cactusPos}px`
+    largeCactusObstacle.style.left = `${cactusPos + 600}px`
+
+    score = 0
+    scoreText.textContent = `Score: ${score}`
+    isGameRunning = false
 })
 
 document.addEventListener("keydown", jump);
@@ -175,8 +214,9 @@ function gameOver() {
         score = 0
     }
 
-    if ((spriteTop + spriteHeight) >= largeCactusObstacleTop && (largeCactusObstacleLeft + largeCactusObstacleWidth) >= (spriteLeft + 280) &&
-        largeCactusObstacleLeft <= (spriteLeft + spriteWidth - 120) && isGameRunning) {
+    if (largeCactusObstacle.style.display != "none" && (spriteTop + spriteHeight) >= largeCactusObstacleTop &&
+        (largeCactusObstacleLeft + largeCactusObstacleWidth) >= (spriteLeft + 280) && largeCactusObstacleLeft <= (spriteLeft + spriteWidth - 120)
+         && isGameRunning) {
         flyingObstacle.style.animationPlayState = "paused";
 
         clouds.forEach((cloud) => {
@@ -215,20 +255,30 @@ function randomizeFlyingObstacle() {
     }
 }
 
+// let delay = 0
 function delayClouds() {
     if (isGameRunning) {
-        let counter = 0
-        clouds.forEach((cloud) => {
-            cloudLeft = parseInt(window.getComputedStyle(cloud).getPropertyPriority("left"))
-            if (cloudLeft < -200) {
-                cloud.style.animationPlayState = "paused"
-                cloud.style.animation = "none"
-                cloud.offsetLeft
-                cloud.style.animation = `cloudMovement 30s linear ${counter}s infinite`
-                counter += 10
-                cloud.style.animationPlayState = "running"
-            }
-        })
+        // clouds.forEach((cloud) => {
+        //     let cloudLeft = parseInt(window.getComputedStyle(cloud).getPropertyValue("left"))
+        //     if (cloudLeft < -180) {
+        //         cloud.style.animationPlayState = "paused"
+        //         cloud.style.animation = "none"
+        //         cloud.offsetLeft
+        //         cloud.style.animation = `cloudMovement 30s linear ${delay}s infinite`
+        //         delay += 10
+        //         // if (counter == 40) {
+        //         //     delay = 10
+        //         // }
+        //     }
+        // })
+
+        let cloud1Left = parseInt(window.getComputedStyle(clouds[0]).getPropertyValue("left"))
+        if (cloud1Left < - 245) {
+            clouds[0].style.animationPlayState = "paused"
+            clouds[0].style.animation = "none"
+            clouds[0].offsetLeft
+            clouds[0].style.animation = "cloudMovement 30s linear 50s infinite"
+        }
     }
 }
 
@@ -269,8 +319,14 @@ function cactusAnimation() {
     let largeCactusObstacleLeft = parseInt(window.getComputedStyle(largeCactusObstacle).getPropertyValue("left"))
     let flyingObstacleLeft = parseInt(window.getComputedStyle(flyingObstacle).getPropertyValue("left"))
 
+    if (fatCactusObstacleLeft < 1700 && largeCactusObstacleLeft < 1700) {
+        if (Math.abs(fatCactusObstacleLeft - largeCactusObstacleLeft) <= 500 && Math.abs(fatCactusObstacleLeft - largeCactusObstacleLeft) >= 100) {
+            largeCactusObstacle.style.display = "none"
+        }
+    }
+
     // fatCactusObstacle dynamics
-    if (fatCactusObstacleLeft >= 1600) {
+    if (fatCactusObstacleLeft >= 1700) {
         if (iterations == 0) {
             slowDown = 4 + Math.floor(Math.random() * 7)
             iterations = 1
@@ -280,7 +336,7 @@ function cactusAnimation() {
 
         if (Math.abs(flyingObstacleLeft - fatCactusObstacleLeft) <= 590) {
             fatCactusObstacleLeft = 1600;
-            fatCactusObstacle.style.left = "1600px";
+            fatCactusObstacle.style.left = "1600px"
         }
     }
     else if (fatCactusObstacleLeft >= -50) {
@@ -288,22 +344,25 @@ function cactusAnimation() {
         fatCactusObstacle.style.left = `${fatCactusObstacleLeft}px`
     }
     else if (fatCactusObstacleLeft < -50) {
-        fatCactusObstacle.style.left = `${3000 + Math.floor(Math.random() * 1000)}px`
+        cactusResetPos = 3000 + Math.floor(Math.random() * 1000)
+        fatCactusObstacleLeft = cactusResetPos
+        fatCactusObstacle.style.left = `${cactusResetPos}px`
         iterations = 0
     }
 
     // largeCactusObstacle dynamics
-    if (largeCactusObstacleLeft >= 1600) {
-        if (iterations == 0) {
-            slowDown = 4 + Math.floor(Math.random() * 7)
-            iterations = 1
-        }
+    if (largeCactusObstacleLeft >= 1700) {
+        // if (iterations == 0) {
+        //     slowDown = 4 + Math.floor(Math.random() * 7)
+        //     iterations = 1
+        // }
         largeCactusObstacleLeft -= slowDown
         largeCactusObstacle.style.left = `${largeCactusObstacleLeft}px`
+        largeCactusObstacle.style.display = "inline"
 
-        if (Math.abs(flyingObstacleLeft - largeCactusObstacleLeft) <= 200) {
+        if (Math.abs(flyingObstacleLeft - largeCactusObstacleLeft) <= 590) {
             largeCactusObstacleLeft = 1600;
-            largeCactusObstacle.style.left = "1600px";
+            largeCactusObstacle.style.left = "1600px"
         }
     }
     else if (largeCactusObstacleLeft >= -50) {
@@ -311,8 +370,11 @@ function cactusAnimation() {
         largeCactusObstacle.style.left = `${largeCactusObstacleLeft}px`
     }
     else if (largeCactusObstacleLeft < -50) {
-        largeCactusObstacle.style.left = `${3000 + Math.floor(Math.random() * 1000)}px`
+        largeCactusObstacleLeft = cactusResetPos + 800
+        largeCactusObstacle.style.left = `${cactusResetPos + 800}px`
         iterations = 0
+        slowDown = 0
+        largeCactusObstacle.style.display = "inline"
     }
 
     if (isGameRunning) {

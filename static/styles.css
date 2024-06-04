@@ -64,8 +64,8 @@ body {
 
 #gameOverText {
     position: absolute;
-    top: 50px;
-    left: 720px;
+    top: 250px;
+    left: 650px;
     font-size: 50px;
 }
 
@@ -91,6 +91,15 @@ body {
     position: absolute;
     top: 50px;
     left: 50px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    background-color: #f4f1de;
+}
+
+#resetButton {
+    position: absolute;
+    top: 50px;
+    left: 180px;
     padding: 10px 20px 10px 20px;
     border-radius: 10px;
     background-color: #f4f1de;
@@ -131,7 +140,7 @@ body {
     animation-play-state: paused;
 }
 
-#gameOverText, #pauseButton, #resumeButton {
+#gameOverText, #pauseButton, #resumeButton, #resetButton {
     display: none;
 }
 
@@ -163,5 +172,5 @@ body {
     width: auto;
     position: absolute;
     top: 460px;
-    left: 2000px;
+    left: 2300px;
 }
