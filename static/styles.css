@@ -2,7 +2,7 @@ body {
     user-select: none;
 }
 
-#game-container {
+#gameContainer {
     width: 1650px;
     height: 600px;
     position: relative;
@@ -105,14 +105,6 @@ body {
     background-color: #f4f1de;
 }
 
-#sprite {
-    width: auto;
-    height: 160px;
-    position: absolute;
-    top: 410px;
-    left: 50px;
-}
-
 @keyframes jump {
     0%{top: 390px;}
     20%{top: 60px;}
@@ -122,6 +114,14 @@ body {
 
 .animate {
     animation: jump 500ms linear;
+}
+
+#sprite {
+    width: auto;
+    height: 160px;
+    position: absolute;
+    top: 410px;
+    left: 50px;
 }
 
 @keyframes slide {
@@ -164,7 +164,7 @@ body {
     width: auto;
     position: absolute;
     top: 460px;
-    left: 1700px;
+    left: 2700px;
 }
 
 #largeCactusObstacle {
@@ -172,5 +172,5 @@ body {
     width: auto;
     position: absolute;
     top: 460px;
-    left: 2300px;
+    left: 3200px;
 }

@@ -58,7 +58,7 @@ document.querySelector("#playButton").addEventListener("click", function() {
     if (playButton.textContent == "Play") {
         setInterval(gameOver, 10)
         setInterval(randomizeFlyingObstacle, 10)
-        setInterval(delayClouds, 10)
+        setInterval(delayCloud1, 10)
         setInterval(scoreKeeper, 100)
     }
 
@@ -136,8 +136,9 @@ document.querySelector("#resetButton").addEventListener("click", function() {
     isGameRunning = false
 })
 
-document.addEventListener("keydown", jump);
-function jump(event) {
+document.addEventListener("keydown", jumpKey);
+document.querySelector("#gameContainer").addEventListener("touchstart", jumpTouch);
+function jumpKey(event) {
     if (sprite.classList == "animate" || !isGameRunning) {
         return
     }
@@ -147,6 +148,15 @@ function jump(event) {
         sprite.classList.add("animate")
         setTimeout(removeJump, 480)
     }
+}
+function jumpTouch(event) {
+
+    if (sprite.classList == "animate" || !isGameRunning || event.target == pauseButton || event.target == resetButton) {
+        return
+    }
+    sprite.src = "static/graphics/standingDino.png"
+    sprite.classList.add("animate")
+    setTimeout(removeJump, 480)
 }
 function removeJump() {
     sprite.classList.remove("animate")
@@ -255,23 +265,8 @@ function randomizeFlyingObstacle() {
     }
 }
 
-// let delay = 0
-function delayClouds() {
+function delayCloud1() {
     if (isGameRunning) {
-        // clouds.forEach((cloud) => {
-        //     let cloudLeft = parseInt(window.getComputedStyle(cloud).getPropertyValue("left"))
-        //     if (cloudLeft < -180) {
-        //         cloud.style.animationPlayState = "paused"
-        //         cloud.style.animation = "none"
-        //         cloud.offsetLeft
-        //         cloud.style.animation = `cloudMovement 30s linear ${delay}s infinite`
-        //         delay += 10
-        //         // if (counter == 40) {
-        //         //     delay = 10
-        //         // }
-        //     }
-        // })
-
         let cloud1Left = parseInt(window.getComputedStyle(clouds[0]).getPropertyValue("left"))
         if (cloud1Left < - 245) {
             clouds[0].style.animationPlayState = "paused"
@@ -319,14 +314,14 @@ function cactusAnimation() {
     let largeCactusObstacleLeft = parseInt(window.getComputedStyle(largeCactusObstacle).getPropertyValue("left"))
     let flyingObstacleLeft = parseInt(window.getComputedStyle(flyingObstacle).getPropertyValue("left"))
 
-    if (fatCactusObstacleLeft < 1700 && largeCactusObstacleLeft < 1700) {
+    if (largeCactusObstacleLeft >= 1600) {
         if (Math.abs(fatCactusObstacleLeft - largeCactusObstacleLeft) <= 500 && Math.abs(fatCactusObstacleLeft - largeCactusObstacleLeft) >= 100) {
             largeCactusObstacle.style.display = "none"
         }
     }
 
     // fatCactusObstacle dynamics
-    if (fatCactusObstacleLeft >= 1700) {
+    if (fatCactusObstacleLeft > 2100) {
         if (iterations == 0) {
             slowDown = 4 + Math.floor(Math.random() * 7)
             iterations = 1
@@ -335,8 +330,8 @@ function cactusAnimation() {
         fatCactusObstacle.style.left = `${fatCactusObstacleLeft}px`
 
         if (Math.abs(flyingObstacleLeft - fatCactusObstacleLeft) <= 590) {
-            fatCactusObstacleLeft = 1600;
-            fatCactusObstacle.style.left = "1600px"
+            fatCactusObstacleLeft = 1650;
+            fatCactusObstacle.style.left = "1650px"
         }
     }
     else if (fatCactusObstacleLeft >= -50) {
@@ -351,18 +346,18 @@ function cactusAnimation() {
     }
 
     // largeCactusObstacle dynamics
-    if (largeCactusObstacleLeft >= 1700) {
-        // if (iterations == 0) {
-        //     slowDown = 4 + Math.floor(Math.random() * 7)
-        //     iterations = 1
-        // }
+    if (largeCactusObstacleLeft > 2100) {
+        if (iterations == 0) {
+            slowDown = 4 + Math.floor(Math.random() * 7)
+            iterations = 1
+        }
         largeCactusObstacleLeft -= slowDown
         largeCactusObstacle.style.left = `${largeCactusObstacleLeft}px`
         largeCactusObstacle.style.display = "inline"
 
         if (Math.abs(flyingObstacleLeft - largeCactusObstacleLeft) <= 590) {
-            largeCactusObstacleLeft = 1600;
-            largeCactusObstacle.style.left = "1600px"
+            largeCactusObstacleLeft = 1650
+            largeCactusObstacle.style.left = "1650px"
         }
     }
     else if (largeCactusObstacleLeft >= -50) {
@@ -381,3 +376,12 @@ function cactusAnimation() {
         requestAnimationFrame(cactusAnimation)
     }
 }
+
+// function screenShake() {
+//     let ground1Left = parseInt(window.getComputedStyle(ground1).getPropertyValue("left"))
+//     let ground2Left = parseInt(window.getComputedStyle(ground2).getPropertyValue("left"))
+
+//     ground1Left -= 10
+//     ground2Left -= 10
+
+// }
