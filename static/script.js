@@ -3,8 +3,10 @@ let pauseButton = document.getElementById("pauseButton")
 let resumeButton = document.getElementById("resumeButton")
 let resetButton = document.getElementById("resetButton")
 
-let flyingObstacle = document.getElementById("flyingObstacle")
-let sprite = document.getElementById("sprite")
+let gameContainer = document.getElementById("gameContainer")
+
+let dragon = document.getElementById("dragon")
+let dino = document.getElementById("dino")
 
 let scoreText = document.getElementById("scoreText")
 let gameOverText = document.getElementById("gameOverText")
@@ -12,26 +14,27 @@ let gameOverText = document.getElementById("gameOverText")
 let ground1 = document.getElementById("ground1")
 let ground2 = document.getElementById("ground2")
 
-let fatCactusObstacle = document.getElementById("fatCactusObstacle")
-let largeCactusObstacle = document.getElementById("largeCactusObstacle")
+let horizontalFire = document.getElementById("horizontalFire")
+let verticalFire = document.getElementById("verticalFire")
 
 let clouds = [document.getElementById("cloud1"), document.getElementById("cloud2"), document.getElementById("cloud3"), document.getElementById("cloud4")]
 
 let isGameRunning = false
 let score = 0
-let flyingObstacleTopPositions = ["350px", "400px", "325px", "375px", "420px", "275px", "250px", "225px", "200px", "100px", "150px", "410px"]
-let limit = flyingObstacleTopPositions.length
+let dragonTopPositions = ["350px", "325px", "375px", "275px", "250px", "225px", "200px", "150px"]
+let limit = dragonTopPositions.length
 
-document.querySelector("#playButton").addEventListener("click", function() {
-    sprite.src = "static/graphics/runningDino.gif"
+playButton.addEventListener("click", function() {
+    dino.src = "static/graphics/runningDino.gif"
+    dino.style.display = "inline"
 
-    // reset animation for flyingObstacle
-    flyingObstacle.style.animation = "none"
-    flyingObstacle.offsetLeft
-    flyingObstacle.style.animation = `slide 2s linear ${5 + Math.floor(Math.random() * 6)}s infinite`
-    flyingObstacle.style.animationPlayState = "running"
-    flyingObstacle.style.opacity = "0"
-    flyingObstacle.style.top = flyingObstacleTopPositions[Math.floor(Math.random() * limit)]
+    // reset animation for dragon
+    dragon.style.width = "300px"
+    dragon.style.animation = "none"
+    dragon.offsetLeft
+    dragon.style.animation = `slide 2s linear ${5 + Math.floor(Math.random() * 6)}s infinite`
+    dragon.style.animationPlayState = "running"
+    dragon.style.top = dragonTopPositions[Math.floor(Math.random() * limit)]
 
     // reset animation for clouds
     let counter = 0
@@ -43,31 +46,33 @@ document.querySelector("#playButton").addEventListener("click", function() {
         cloud.style.animationPlayState = "running"
     })
 
-    gameOverText.style.display = "none"
+    gameOverText.style.opacity = 0
     playButton.style.display = "none"
     pauseButton.style.display = "inline"
     resetButton.style.display = "inline"
+    scoreText.style.display = "inline"
 
-    let cactusPos = 3000 + Math.floor(Math.random() * 1000)
-    fatCactusObstacle.style.left = `${cactusPos}px`
-    largeCactusObstacle.style.left = `${cactusPos + 600}px`
+    let fireResetPos = 3000 + Math.floor(Math.random() * 1000)
+    horizontalFire.style.left = `${fireResetPos}px`
+    verticalFire.style.left = `${fireResetPos + 500}px`
 
     isGameRunning = true
     score = 0
 
     if (playButton.textContent == "Play") {
         setInterval(gameOver, 10)
-        setInterval(randomizeFlyingObstacle, 10)
+        setInterval(randomizedragon, 10)
         setInterval(delayCloud1, 10)
         setInterval(scoreKeeper, 100)
     }
 
     requestAnimationFrame(groundAnimation)
-    requestAnimationFrame(cactusAnimation)
+    requestAnimationFrame(horizontalFireController)
+    requestAnimationFrame(verticalFireController)
 })
 
-document.querySelector("#pauseButton").addEventListener("click", function() {
-    flyingObstacle.style.animationPlayState = "paused"
+pauseButton.addEventListener("click", function() {
+    dragon.style.animationPlayState = "paused"
 
     clouds.forEach((cloud) => {
         cloud.style.animationPlayState = "paused"
@@ -76,13 +81,13 @@ document.querySelector("#pauseButton").addEventListener("click", function() {
     pauseButton.style.display = "none"
     resumeButton.style.display = "inline"
 
-    sprite.src = "static/graphics/standingDino.png"
+    dino.src = "static/graphics/standingDino.gif"
 
     isGameRunning = false
 })
 
-document.querySelector("#resumeButton").addEventListener("click", function() {
-    flyingObstacle.style.animationPlayState = "running"
+resumeButton.addEventListener("click", function() {
+    dragon.style.animationPlayState = "running"
 
     clouds.forEach((cloud) => {
         cloud.style.animationPlayState = "running"
@@ -91,23 +96,27 @@ document.querySelector("#resumeButton").addEventListener("click", function() {
     pauseButton.style.display = "inline"
     resumeButton.style.display = "none"
 
-    sprite.src = "static/graphics/runningDino.gif"
+    dino.src = "static/graphics/runningDino.gif"
 
     isGameRunning = true
 
     requestAnimationFrame(groundAnimation)
-    requestAnimationFrame(cactusAnimation)
+    requestAnimationFrame(horizontalFireController)
+    requestAnimationFrame(verticalFireController)
 })
 
-document.querySelector("#resetButton").addEventListener("click", function() {
-    // reset animation for flyingObstacle
-    flyingObstacle.style.animation = "none"
-    flyingObstacle.offsetLeft
-    flyingObstacle.style.animation = `slide 2s linear ${5 + Math.floor(Math.random() * 6)}s infinite`
-    flyingObstacle.style.animationPlayState = "paused"
-    flyingObstacle.style.opacity = "0"
-    flyingObstacle.style.top = flyingObstacleTopPositions[Math.floor(Math.random() * limit)]
+resetButton.addEventListener("click", function() {
+    dino.style.display = "inline"
+    dino.src = "static/graphics/standingDino.gif"
 
+    // reset animation for dragon
+    dragon.style.width = "300px"
+    dragon.style.animation = "none"
+    dragon.offsetLeft
+    dragon.style.animation = `slide 2s linear ${5 + Math.floor(Math.random() * 6)}s infinite`
+    dragon.style.animationPlayState = "paused"
+    dragon.style.top = dragonTopPositions[Math.floor(Math.random() * limit)]
+    
     // reset animation for clouds
     let counter = 0
     clouds.forEach((cloud) => {
@@ -118,18 +127,15 @@ document.querySelector("#resetButton").addEventListener("click", function() {
         cloud.style.animationPlayState = "paused"
     })
 
-    gameOverText.style.display = "none"
+    gameOverText.style.opacity = 0
     playButton.style.display = "inline"
     pauseButton.style.display = "none"
     resumeButton.style.display = "none"
     resetButton.style.display = "none"
 
-    sprite.src = "static/graphics/standingDino.png"
-
-    // reset animation for cactus
-    let cactusPos = 3000 + Math.floor(Math.random() * 1000)
-    fatCactusObstacle.style.left = `${cactusPos}px`
-    largeCactusObstacle.style.left = `${cactusPos + 600}px`
+    let fireResetPos = 3000 + Math.floor(Math.random() * 1000)
+    horizontalFire.style.left = `${fireResetPos}px`
+    verticalFire.style.left = `${fireResetPos + 500}px`
 
     score = 0
     scoreText.textContent = `Score: ${score}`
@@ -137,56 +143,56 @@ document.querySelector("#resetButton").addEventListener("click", function() {
 })
 
 document.addEventListener("keydown", jumpKey);
-document.querySelector("#gameContainer").addEventListener("touchstart", jumpTouch);
+gameContainer.addEventListener("touchstart", jumpTouch);
 function jumpKey(event) {
-    if (sprite.classList == "animate" || !isGameRunning) {
+    if (dino.classList == "animate" || !isGameRunning) {
         return
     }
 
     if (event.key === "ArrowUp" || event.key === " " || event.key === "w" || event.key === "W") {
-        sprite.src = "static/graphics/standingDino.png"
-        sprite.classList.add("animate")
+        dino.src = "static/graphics/standingDino.gif"
+        dino.classList.add("animate")
         setTimeout(removeJump, 480)
     }
 }
 function jumpTouch(event) {
-
-    if (sprite.classList == "animate" || !isGameRunning || event.target == pauseButton || event.target == resetButton) {
+    if (dino.classList == "animate" || !isGameRunning || event.target == pauseButton || event.target == resetButton) {
         return
     }
-    sprite.src = "static/graphics/standingDino.png"
-    sprite.classList.add("animate")
+    dino.src = "static/graphics/standingDino.gif"
+    dino.classList.add("animate")
     setTimeout(removeJump, 480)
 }
 function removeJump() {
-    sprite.classList.remove("animate")
+    dino.classList.remove("animate")
     if (isGameRunning) {
-        sprite.src = "static/graphics/runningDino.gif"
+        dino.src = "static/graphics/runningDino.gif"
     }
 }
 
 function gameOver() {
-    let spriteTop = parseInt(window.getComputedStyle(sprite).getPropertyValue("top"))
-    let spriteLeft = parseInt(window.getComputedStyle(sprite).getPropertyValue("left"))
-    let spriteWidth = parseInt(window.getComputedStyle(sprite).getPropertyValue("width"))
-    let spriteHeight = parseInt(window.getComputedStyle(sprite).getPropertyValue("height"))
+    let dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("top"))
+    let dinoLeft = parseInt(window.getComputedStyle(dino).getPropertyValue("left"))
+    let dinoWidth = parseInt(window.getComputedStyle(dino).getPropertyValue("width"))
+    let dinoHeight = parseInt(window.getComputedStyle(dino).getPropertyValue("height"))
 
-    let flyingObstacleTop = parseInt(window.getComputedStyle(flyingObstacle).getPropertyValue("top"))
-    let flyingObstacleLeft = parseInt(window.getComputedStyle(flyingObstacle).getPropertyValue("left"))
-    let flyingObstacleHeight = parseInt(window.getComputedStyle(flyingObstacle).getPropertyValue("height"))
+    let dragonTop = parseInt(window.getComputedStyle(dragon).getPropertyValue("top"))
+    let dragonLeft = parseInt(window.getComputedStyle(dragon).getPropertyValue("left"))
+    let dragonHeight = parseInt(window.getComputedStyle(dragon).getPropertyValue("height"))
 
-    let fatCactusObstacleTop = parseInt(window.getComputedStyle(fatCactusObstacle).getPropertyValue("top"))
-    let fatCactusObstacleLeft = parseInt(window.getComputedStyle(fatCactusObstacle).getPropertyValue("left"))
-    let fatCactusObstacleWidth = parseInt(window.getComputedStyle(fatCactusObstacle).getPropertyValue("width"))
+    let horizontalFireTop = parseInt(window.getComputedStyle(horizontalFire).getPropertyValue("top"))
+    let horizontalFireLeft = parseInt(window.getComputedStyle(horizontalFire).getPropertyValue("left"))
+    let horizontalFireWidth = parseInt(window.getComputedStyle(horizontalFire).getPropertyValue("width"))
 
-    let largeCactusObstacleTop = parseInt(window.getComputedStyle(largeCactusObstacle).getPropertyValue("top"))
-    let largeCactusObstacleLeft = parseInt(window.getComputedStyle(largeCactusObstacle).getPropertyValue("left"))
-    let largeCactusObstacleWidth = parseInt(window.getComputedStyle(largeCactusObstacle).getPropertyValue("width"))
+    let verticalFireTop = parseInt(window.getComputedStyle(verticalFire).getPropertyValue("top"))
+    let verticalFireLeft = parseInt(window.getComputedStyle(verticalFire).getPropertyValue("left"))
+    let verticalFireWidth = parseInt(window.getComputedStyle(verticalFire).getPropertyValue("width"))
 
-    if (flyingObstacleLeft < (spriteLeft + spriteWidth - 65) && flyingObstacleLeft > (spriteLeft + 200) &&
-        (flyingObstacleTop + flyingObstacleHeight) > (spriteTop + 30) && flyingObstacleTop < (spriteTop + spriteHeight - 120) && isGameRunning) {
+    // collision with dragon
+    if (isGameRunning && dragonLeft < (dinoLeft + dinoWidth - 20) && dragonLeft > (dinoLeft + 70) && (dragonTop + dragonHeight) > (dinoTop + 80)
+        && dragonTop < (dinoTop + dinoHeight)) {
 
-        flyingObstacle.style.animationPlayState = "paused"
+        dragon.style.animationPlayState = "paused"
 
         clouds.forEach((cloud) => {
             cloud.style.animationPlayState = "paused"
@@ -194,20 +200,23 @@ function gameOver() {
 
         playButton.style.display = "inline"
         playButton.textContent = "Play Again"
-        gameOverText.style.display = "inline"
+        gameOverText.style.opacity = 1
         pauseButton.style.display = "none"
-
-        sprite.src = "static/graphics/standingDino.png"
 
         isGameRunning = false
         score = 0
-        
+
+        dragon.style.width = "400px"
+        dragon.style.top = `${dragonTop - 100}px`
+        dino.style.display = "none"
+
+        screenShake()
         return
     }
-
-    if ((spriteTop + spriteHeight) >= fatCactusObstacleTop && (fatCactusObstacleLeft + fatCactusObstacleWidth) >= (spriteLeft + 280) &&
-        fatCactusObstacleLeft <= (spriteLeft + spriteWidth - 120) && isGameRunning) {
-        flyingObstacle.style.animationPlayState = "paused"
+    // collision with horizontalFire
+    if (isGameRunning && (dinoTop + dinoHeight) >= horizontalFireTop && (horizontalFireLeft + horizontalFireWidth) >= (dinoLeft + 250) &&
+        horizontalFireLeft <= (dinoLeft + dinoWidth - 20)) {
+        dragon.style.animationPlayState = "paused"
 
         clouds.forEach((cloud) => {
             cloud.style.animationPlayState = "paused"
@@ -215,19 +224,20 @@ function gameOver() {
 
         playButton.style.display = "inline"
         playButton.textContent = "Play Again"
-        gameOverText.style.display = "inline"
+        gameOverText.style.opacity = 1
         pauseButton.style.display = "none"
 
-        sprite.src = "static/graphics/standingDino.png"
+        dino.src = "static/graphics/standingDino.gif"
 
         isGameRunning = false
         score = 0
+        screenShake()
+        return
     }
-
-    if (largeCactusObstacle.style.display != "none" && (spriteTop + spriteHeight) >= largeCactusObstacleTop &&
-        (largeCactusObstacleLeft + largeCactusObstacleWidth) >= (spriteLeft + 280) && largeCactusObstacleLeft <= (spriteLeft + spriteWidth - 120)
-         && isGameRunning) {
-        flyingObstacle.style.animationPlayState = "paused";
+    // collsion with verticalFire
+    if (isGameRunning && (dinoTop + dinoHeight) >= verticalFireTop && (verticalFireLeft + verticalFireWidth) >= (dinoLeft + 120) &&
+        verticalFireLeft <= (dinoLeft + dinoWidth - 30)) {
+        dragon.style.animationPlayState = "paused";
 
         clouds.forEach((cloud) => {
             cloud.style.animationPlayState = "paused"
@@ -235,32 +245,30 @@ function gameOver() {
 
         playButton.style.display = "inline"
         playButton.textContent = "Play Again"
-        gameOverText.style.display = "inline"
+        gameOverText.style.opacity = 1
         pauseButton.style.display = "none"
 
-        sprite.src = "static/graphics/standingDino.png"
+        dino.src = "static/graphics/standingDino.gif"
 
         isGameRunning = false
         score = 0
+        screenShake()
+        return
     }
 }
 
-function randomizeFlyingObstacle() {
+function randomizedragon() {
     if (isGameRunning) {
-        let flyingObstacleLeft = parseInt(window.getComputedStyle(flyingObstacle).getPropertyValue("left"))
-        if (flyingObstacleLeft < -20) {
+        let dragonLeft = parseInt(window.getComputedStyle(dragon).getPropertyValue("left"))
+        if (dragonLeft < -300) {
             // randomize obstacle vertical position
-            flyingObstacle.style.top = flyingObstacleTopPositions[Math.floor(Math.random() * limit)]
-            flyingObstacle.style.opacity = "0"
+            dragon.style.top = dragonTopPositions[Math.floor(Math.random() * limit)]
 
             // randomize obstacle appearance time
-            flyingObstacle.style.animationPlayState = "paused"
-            flyingObstacle.style.animation = "none"
-            flyingObstacle.offsetLeft
-            flyingObstacle.style.animation = `slide 2s linear ${5 + Math.floor(Math.random() * 6)}s infinite`
-        }
-        else if (flyingObstacleLeft < 1600) {
-            flyingObstacle.style.opacity = "1"
+            dragon.style.animationPlayState = "paused"
+            dragon.style.animation = "none"
+            dragon.offsetLeft
+            dragon.style.animation = `slide 2s linear ${5 + Math.floor(Math.random() * 6)}s infinite`
         }
     }
 }
@@ -306,82 +314,139 @@ function groundAnimation() {
     }
 }
 
-let iterations = 0
-let slowDown = 0
-let cactusResetPos = 0
-function cactusAnimation() {
-    let fatCactusObstacleLeft = parseInt(window.getComputedStyle(fatCactusObstacle).getPropertyValue("left"))
-    let largeCactusObstacleLeft = parseInt(window.getComputedStyle(largeCactusObstacle).getPropertyValue("left"))
-    let flyingObstacleLeft = parseInt(window.getComputedStyle(flyingObstacle).getPropertyValue("left"))
+let slowdownH = 0
+function horizontalFireController() {
+    let horizontalFireLeft = parseInt(window.getComputedStyle(horizontalFire).getPropertyValue("left"))
+    let verticalFireLeft = parseInt(window.getComputedStyle(verticalFire).getPropertyValue("left"))
+    let dragonLeft = parseInt(window.getComputedStyle(dragon).getPropertyValue("left"))
 
-    if (largeCactusObstacleLeft >= 1600) {
-        if (Math.abs(fatCactusObstacleLeft - largeCactusObstacleLeft) <= 500 && Math.abs(fatCactusObstacleLeft - largeCactusObstacleLeft) >= 100) {
-            largeCactusObstacle.style.display = "none"
+    if (horizontalFireLeft > 2900) {
+        if (slowdownH == 0) {
+            slowdownH = 4 + Math.floor(Math.random() * 7)
+        }
+        horizontalFireLeft -= slowdownH
+    }
+    else if (horizontalFireLeft > 2400) {
+        if (dragonLeft < 2200 && dragonLeft > 2100) {
+            horizontalFireLeft = 3000
+            horizontalFire.style.left = `${horizontalFireLeft}px`
+        }
+        horizontalFireLeft -= slowdownH
+    }
+    else if (horizontalFireLeft > 1700) {
+        if (dragonLeft < 2200 && dragonLeft > 2100) {
+            horizontalFireLeft = 3000
+            horizontalFire.style.left = `${horizontalFireLeft}px`
+        }
+        horizontalFireLeft -= slowdownH
+        if (Math.abs(verticalFireLeft - horizontalFireLeft) < 400) {
+            horizontalFire.style.display == "none"
         }
     }
-
-    // fatCactusObstacle dynamics
-    if (fatCactusObstacleLeft > 2100) {
-        if (iterations == 0) {
-            slowDown = 4 + Math.floor(Math.random() * 7)
-            iterations = 1
-        }
-        fatCactusObstacleLeft -= slowDown
-        fatCactusObstacle.style.left = `${fatCactusObstacleLeft}px`
-
-        if (Math.abs(flyingObstacleLeft - fatCactusObstacleLeft) <= 590) {
-            fatCactusObstacleLeft = 1650;
-            fatCactusObstacle.style.left = "1650px"
-        }
+    else if (horizontalFireLeft > -50) {
+        horizontalFireLeft -= 25
     }
-    else if (fatCactusObstacleLeft >= -50) {
-        fatCactusObstacleLeft -= 15
-        fatCactusObstacle.style.left = `${fatCactusObstacleLeft}px`
+    else {
+        slowdownH = 0
+        horizontalFireLeft = 3000 + Math.random() * 1000
+        horizontalFire.style.display = "inline"
     }
-    else if (fatCactusObstacleLeft < -50) {
-        cactusResetPos = 3000 + Math.floor(Math.random() * 1000)
-        fatCactusObstacleLeft = cactusResetPos
-        fatCactusObstacle.style.left = `${cactusResetPos}px`
-        iterations = 0
-    }
-
-    // largeCactusObstacle dynamics
-    if (largeCactusObstacleLeft > 2100) {
-        if (iterations == 0) {
-            slowDown = 4 + Math.floor(Math.random() * 7)
-            iterations = 1
-        }
-        largeCactusObstacleLeft -= slowDown
-        largeCactusObstacle.style.left = `${largeCactusObstacleLeft}px`
-        largeCactusObstacle.style.display = "inline"
-
-        if (Math.abs(flyingObstacleLeft - largeCactusObstacleLeft) <= 590) {
-            largeCactusObstacleLeft = 1650
-            largeCactusObstacle.style.left = "1650px"
-        }
-    }
-    else if (largeCactusObstacleLeft >= -50) {
-        largeCactusObstacleLeft -= 15
-        largeCactusObstacle.style.left = `${largeCactusObstacleLeft}px`
-    }
-    else if (largeCactusObstacleLeft < -50) {
-        largeCactusObstacleLeft = cactusResetPos + 800
-        largeCactusObstacle.style.left = `${cactusResetPos + 800}px`
-        iterations = 0
-        slowDown = 0
-        largeCactusObstacle.style.display = "inline"
-    }
+    horizontalFire.style.left = `${horizontalFireLeft}px`
 
     if (isGameRunning) {
-        requestAnimationFrame(cactusAnimation)
+        requestAnimationFrame(horizontalFireController)
     }
 }
 
-// function screenShake() {
-//     let ground1Left = parseInt(window.getComputedStyle(ground1).getPropertyValue("left"))
-//     let ground2Left = parseInt(window.getComputedStyle(ground2).getPropertyValue("left"))
+let slowdownV = 0
+function verticalFireController() {
+    let verticalFireLeft = parseInt(window.getComputedStyle(verticalFire).getPropertyValue("left"))
+    let dragonLeft = parseInt(window.getComputedStyle(dragon).getPropertyValue("left"))
 
-//     ground1Left -= 10
-//     ground2Left -= 10
+    if (verticalFireLeft > 2900) {
+        if (slowdownV == 0) {
+            slowdownV = 4 + Math.floor(Math.random() * 7)
+        }
+        verticalFireLeft -= slowdownV
+    }
+    else if (verticalFireLeft > 2400) {
+        if (dragonLeft < 2200 && dragonLeft > 2100) {
+            verticalFireLeft = 3000
+            verticalFire.style.left = `${verticalFireLeft}px`
+        }
+        verticalFireLeft -= slowdownV
+    }
+    else if (verticalFireLeft > 1700) {
+        if (dragonLeft < 2200 && dragonLeft > 2100) {
+            verticalFireLeft = 3000
+            verticalFire.style.left = `${verticalFireLeft}px`
+        }
+        verticalFireLeft -= slowdownV
+    }
+    else if (verticalFireLeft > -50) {
+        verticalFireLeft -= 15
+    }
+    else {
+        slowdownV = 0
+        verticalFireLeft = 3000 + Math.random() * 1000
+    }
+    verticalFire.style.left = `${verticalFireLeft}px`
 
-// }
+    if (isGameRunning) {
+        requestAnimationFrame(verticalFireController)
+    }
+}
+
+function screenShake() {
+    ground1.classList.add("shake")
+    ground2.classList.add("shake")
+    
+    clouds.forEach((cloud) => {
+        cloud.classList.add("shake")
+    })
+
+    horizontalFire.classList.add("shake")
+    verticalFire.classList.add("shake")
+    dragon.classList.add("shake")
+    dino.classList.add("shake")
+
+    gameOverText.classList.add("shake")
+
+    setTimeout(() => {
+        ground1.classList.remove("shake")
+        ground2.classList.remove("shake")
+
+        clouds.forEach((cloud) => {
+            cloud.classList.remove("shake")
+        })
+
+        horizontalFire.classList.remove("shake")
+        verticalFire.classList.remove("shake")
+        dragon.classList.remove("shake")
+        dino.classList.remove("shake")
+
+        gameOverText.classList.remove("shake")
+    }, 50)
+}
+
+// function onLongPress(element, callback) {
+//     let timer;
+  
+//     element.addEventListener('touchstart', () => { 
+//       timer = setTimeout(() => {
+//         timer = null;
+//         callback();
+//       }, 500);
+//     });
+  
+//     function cancel() {
+//       clearTimeout(timer);
+//     }
+  
+//     element.addEventListener('touchend', cancel);
+//     element.addEventListener('touchmove', cancel);
+//   }
+
+//   onLongPress(gameContainer, () => {
+//     console.log('Long pressed', gameContainer);
+//   });

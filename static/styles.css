@@ -2,6 +2,10 @@ body {
     user-select: none;
 }
 
+.shake {
+    transform: translateX(-30px);
+}
+
 #gameContainer {
     width: 1650px;
     height: 600px;
@@ -9,6 +13,138 @@ body {
     overflow: hidden;
     background-color: #f4f1de;
     border-radius: 20px;
+}
+
+@keyframes jump {
+    0%{top: 480px;}
+    20%{top: 120px;}
+    60%{top: 120px;}
+    100%{top: 480px;}
+}
+
+.animate {
+    animation: jump 500ms linear;
+}
+
+#dino {
+    width: auto;
+    height: 100px;
+    position: absolute;
+    top: 480px;
+    left: 50px;
+}
+
+@keyframes slide {
+    0%{left: 2200px}
+    100%{left: -400px}
+}
+
+#dragon {
+    width: 300px;
+    height: auto;
+    position: absolute;
+    top: 400px;
+    left: 2200px;
+    animation: slide 2s linear 2s infinite;
+    animation-play-state: paused;
+    transition: top 0.2s cubic-bezier(0.76, 0, 0.24, 1), width 0.2s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+#horizontalFire {
+    width: 290px;
+    position: absolute;
+    top: 470px;
+    left: 2900px;
+}
+
+#verticalFire {
+    height: 170px;
+    width: auto;
+    position: absolute;
+    top: 410px;
+    left: 3200px;
+}
+
+#scoreText {
+    position: absolute;
+    border: 2px solid black;
+    border-radius: 10px;
+    right: 50px;
+    top: 50px;
+    padding: 10px 20px 10px 20px;
+    display: none;
+}
+
+#gameOverText {
+    position: absolute;
+    top: 250px;
+    left: 620px;
+    font-size: 50px;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#playButton {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    background-color: #f4f1de;
+    box-shadow: #bc4749 6px 6px;
+}
+
+#pauseButton {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    background-color: #f4f1de;
+    display: none;
+    box-shadow: #bc4749 6px 6px;
+}
+
+#resumeButton {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    background-color: #f4f1de;
+    display: none;
+    box-shadow: #bc4749 6px 6px;
+}
+
+#resetButton {
+    position: absolute;
+    top: 100px;
+    left: 30px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    background-color: #f4f1de;
+    display: none;
+    box-shadow: #bc4749 6px 6px;
+}
+
+#playButton:hover, #pauseButton:hover, #resumeButton:hover, #resetButton:hover {
+    padding: 11px 21px 11px 20px;
+}
+
+#ground1 {
+    left: 0px;
+    width: 1650px;
+    height: auto;
+    position: absolute;
+    top: 570px;
+}
+
+#ground2 {
+    width: 1650px;
+    height: auto;
+    position: absolute;
+    left: 1649px;
+    top: 570px;
 }
 
 @keyframes cloudMovement {
@@ -25,6 +161,7 @@ body {
     animation: cloudMovement 30s linear 0s infinite;
     animation-play-state: paused;
 }
+
 #cloud2 {
     width: 200px;
     height: auto;
@@ -34,6 +171,7 @@ body {
     animation: cloudMovement 30s linear 10s infinite;
     animation-play-state: paused;
 }
+
 #cloud3 {
     width: 200px;
     height: auto;
@@ -43,6 +181,7 @@ body {
     animation: cloudMovement 30s linear 20s infinite;
     animation-play-state: paused;
 }
+
 #cloud4 {
     width: 200px;
     height: auto;
@@ -51,126 +190,4 @@ body {
     top: 150px;
     animation: cloudMovement 30s linear 30s infinite;
     animation-play-state: paused;
-}
-
-#scoreText {
-    position: absolute;
-    border: 2px solid black;
-    border-radius: 10px;
-    right: 50px;
-    top: 50px;
-    padding: 10px 20px 10px 20px;
-}
-
-#gameOverText {
-    position: absolute;
-    top: 250px;
-    left: 650px;
-    font-size: 50px;
-}
-
-#playButton {
-    position: absolute;
-    top: 50px;
-    left: 50px;
-    padding: 10px 20px 10px 20px;
-    border-radius: 10px;
-    background-color: #f4f1de;
-}
-
-#pauseButton {
-    position: absolute;
-    top: 50px;
-    left: 50px;
-    padding: 10px 20px 10px 20px;
-    border-radius: 10px;
-    background-color: #f4f1de;
-}
-
-#resumeButton {
-    position: absolute;
-    top: 50px;
-    left: 50px;
-    padding: 10px 20px 10px 20px;
-    border-radius: 10px;
-    background-color: #f4f1de;
-}
-
-#resetButton {
-    position: absolute;
-    top: 50px;
-    left: 180px;
-    padding: 10px 20px 10px 20px;
-    border-radius: 10px;
-    background-color: #f4f1de;
-}
-
-@keyframes jump {
-    0%{top: 390px;}
-    20%{top: 60px;}
-    60%{top: 60px;}
-    100%{top: 390px;}
-}
-
-.animate {
-    animation: jump 500ms linear;
-}
-
-#sprite {
-    width: auto;
-    height: 160px;
-    position: absolute;
-    top: 410px;
-    left: 50px;
-}
-
-@keyframes slide {
-    0%{left: 2200px}
-    100%{left: -40px}
-}
-
-#flyingObstacle {
-    width: auto;
-    height: 150px;
-    position: absolute;
-    top: 400px;
-    left: 2200px;
-    animation: slide 2s linear 2s infinite;
-    opacity: 0;
-    animation-play-state: paused;
-}
-
-#gameOverText, #pauseButton, #resumeButton, #resetButton {
-    display: none;
-}
-
-#ground1 {
-    left: 0px;
-    width: 1650px;
-    height: auto;
-    position: absolute;
-    top: 570px;
-}
-#ground2 {
-    width: 1650px;
-    height: auto;
-    position: absolute;
-    left: 1649px;
-    top: 570px;
-}
-
-#fatCactusObstacle {
-    height: 120px;
-    width: auto;
-    position: absolute;
-    top: 460px;
-    left: 2700px;
-}
-
-#largeCactusObstacle {
-    height: 120px;
-    width: auto;
-    position: absolute;
-    top: 460px;
-    left: 3200px;
 }
