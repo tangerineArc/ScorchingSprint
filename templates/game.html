@@ -6,30 +6,34 @@
 
 {% block main %}
 
-    <div id="gameContainer" oncontextmenu="return false;">
-        <img src="static/graphics/cloud1.png" alt="" id="cloud1">
-        <img src="static/graphics/cloud2.png" alt="" id="cloud2">
-        <img src="static/graphics/cloud3.png" alt="" id="cloud3">
-        <img src="static/graphics/cloud4.png" alt="" id="cloud4">
+    <main class="container py-5 px-0 mx-5">
+        <div id="gameContainer" oncontextmenu="return false;">
+            <img src="static/graphics/cloud1.png" alt="" id="cloud1">
+            <img src="static/graphics/cloud2.png" alt="" id="cloud2">
+            <img src="static/graphics/cloud3.png" alt="" id="cloud3">
+            <img src="static/graphics/cloud4.png" alt="" id="cloud4">
 
-        <img src="static/graphics/dragon.gif" alt="" id="dragon">
+            <img src="static/graphics/dragon.gif" alt="" id="dragon">
 
-        <span id="scoreText">0</span>
-        <button id="playButton">Play</button>
-        <button id="pauseButton">Pause</button>
-        <button id="resumeButton">Resume</button>
-        <button id="resetButton">Reset</button>
-        <span id="gameOverText">G A M E &nbsp;&nbsp;&nbsp; O V E R</span>
+            <span id="scoreText">0</span>
+            <button id="playButton">Play</button>
+            <button id="pauseButton">Pause</button>
+            <button id="resumeButton">Resume</button>
+            <button id="resetButton">Reset</button>
+            <span id="gameOverText">G A M E &nbsp;&nbsp;&nbsp; O V E R</span>
 
-        <span>
-            <img src="static/graphics/ground.png" alt="" id="ground1">
-            <img src="static/graphics/ground.png" alt="" id="ground2">
-        </span>
+            <span>
+                <img src="static/graphics/ground.png" alt="" id="ground1">
+                <img src="static/graphics/ground.png" alt="" id="ground2">
+            </span>
 
-        <img src="static/graphics/standingDino.gif" alt="" id="dino">
-        <img src="static/graphics/horizontalFire.gif" alt="" id="horizontalFire">
-        <img src="static/graphics/verticalFire.gif" alt="" id="verticalFire1">
-        <img src="static/graphics/verticalFire.gif" alt="" id="verticalFire2">
-    </div>
+            <img src="static/graphics/standingDino.gif" alt="" id="dino">
+            <img src="static/graphics/horizontalFire.gif" alt="" id="horizontalFire">
+            <img src="static/graphics/verticalFire.gif" alt="" id="verticalFire1">
+            <img src="static/graphics/verticalFire.gif" alt="" id="verticalFire2">
+        </div>
+    </main>
+
+    <script src="/static/gameScript.js"></script>
 
 {% endblock %}

@@ -11,9 +11,6 @@ body {
     height: 600px;
     position: relative;
     overflow: hidden;
-    /* background-color: #f4f1de; */
-    /* background-color: #051923; */
-    /* background-color: black; */
     background-image: url("/static/graphics/bg.png");
     border-radius: 20px;
 }
