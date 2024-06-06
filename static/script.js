@@ -15,24 +15,30 @@ let ground1 = document.getElementById("ground1")
 let ground2 = document.getElementById("ground2")
 
 let horizontalFire = document.getElementById("horizontalFire")
-let verticalFire = document.getElementById("verticalFire")
+let verticalFire1 = document.getElementById("verticalFire1")
+let verticalFire2 = document.getElementById("verticalFire2")
 
 let clouds = [document.getElementById("cloud1"), document.getElementById("cloud2"), document.getElementById("cloud3"), document.getElementById("cloud4")]
 
 let isGameRunning = false
 let score = 0
+let verticalFire1Speed = 15
+let verticalFire2Speed = 15
+let groundSpeed = 15
 let dragonTopPositions = ["350px", "325px", "375px", "275px", "250px", "225px", "200px", "150px"]
 let limit = dragonTopPositions.length
 
 playButton.addEventListener("click", function() {
     dino.src = "static/graphics/runningDino.gif"
     dino.style.display = "inline"
+    dino.style.height = "100px"
+    dino.style.top = "480px"
 
     // reset animation for dragon
     dragon.style.width = "300px"
     dragon.style.animation = "none"
     dragon.offsetLeft
-    dragon.style.animation = `slide 2s linear ${5 + Math.floor(Math.random() * 6)}s infinite`
+    dragon.style.animation = `slide 2.5s linear ${5 + Math.floor(Math.random() * 6)}s infinite`
     dragon.style.animationPlayState = "running"
     dragon.style.top = dragonTopPositions[Math.floor(Math.random() * limit)]
 
@@ -54,7 +60,8 @@ playButton.addEventListener("click", function() {
 
     let fireResetPos = 3000 + Math.floor(Math.random() * 1000)
     horizontalFire.style.left = `${fireResetPos}px`
-    verticalFire.style.left = `${fireResetPos + 500}px`
+    verticalFire1.style.left = `${fireResetPos + 500}px`
+    verticalFire2.style.left = `${fireResetPos + 1000}px`
 
     isGameRunning = true
     score = 0
@@ -108,12 +115,14 @@ resumeButton.addEventListener("click", function() {
 resetButton.addEventListener("click", function() {
     dino.style.display = "inline"
     dino.src = "static/graphics/standingDino.gif"
+    dino.style.height = "100px"
+    dino.style.top = "480px"
 
     // reset animation for dragon
     dragon.style.width = "300px"
     dragon.style.animation = "none"
     dragon.offsetLeft
-    dragon.style.animation = `slide 2s linear ${5 + Math.floor(Math.random() * 6)}s infinite`
+    dragon.style.animation = `slide 2.5s linear ${5 + Math.floor(Math.random() * 6)}s infinite`
     dragon.style.animationPlayState = "paused"
     dragon.style.top = dragonTopPositions[Math.floor(Math.random() * limit)]
     
@@ -135,10 +144,11 @@ resetButton.addEventListener("click", function() {
 
     let fireResetPos = 3000 + Math.floor(Math.random() * 1000)
     horizontalFire.style.left = `${fireResetPos}px`
-    verticalFire.style.left = `${fireResetPos + 500}px`
+    verticalFire1.style.left = `${fireResetPos + 500}px`
+    verticalFire2.style.left = `${fireResetPos + 1000}px`
 
     score = 0
-    scoreText.textContent = `Score: ${score}`
+    scoreText.textContent = `${score}`
     isGameRunning = false
 })
 
@@ -184,9 +194,13 @@ function gameOver() {
     let horizontalFireLeft = parseInt(window.getComputedStyle(horizontalFire).getPropertyValue("left"))
     let horizontalFireWidth = parseInt(window.getComputedStyle(horizontalFire).getPropertyValue("width"))
 
-    let verticalFireTop = parseInt(window.getComputedStyle(verticalFire).getPropertyValue("top"))
-    let verticalFireLeft = parseInt(window.getComputedStyle(verticalFire).getPropertyValue("left"))
-    let verticalFireWidth = parseInt(window.getComputedStyle(verticalFire).getPropertyValue("width"))
+    let verticalFire1Top = parseInt(window.getComputedStyle(verticalFire1).getPropertyValue("top"))
+    let verticalFire1Left = parseInt(window.getComputedStyle(verticalFire1).getPropertyValue("left"))
+    let verticalFire1Width = parseInt(window.getComputedStyle(verticalFire1).getPropertyValue("width"))
+
+    let verticalFire2Top = parseInt(window.getComputedStyle(verticalFire2).getPropertyValue("top"))
+    let verticalFire2Left = parseInt(window.getComputedStyle(verticalFire2).getPropertyValue("left"))
+    let verticalFire2Width = parseInt(window.getComputedStyle(verticalFire2).getPropertyValue("width"))
 
     // collision with dragon
     if (isGameRunning && dragonLeft < (dinoLeft + dinoWidth - 20) && dragonLeft > (dinoLeft + 70) && (dragonTop + dragonHeight) > (dinoTop + 80)
@@ -205,6 +219,9 @@ function gameOver() {
 
         isGameRunning = false
         score = 0
+        verticalFire1Speed = 15
+        verticalFire2Speed = 15
+        groundSpeed = 15
 
         dragon.style.width = "400px"
         dragon.style.top = `${dragonTop - 100}px`
@@ -227,16 +244,21 @@ function gameOver() {
         gameOverText.style.opacity = 1
         pauseButton.style.display = "none"
 
-        dino.src = "static/graphics/standingDino.gif"
+        dino.src = "static/graphics/dinoOnFire.gif"
+        dino.style.height = "150px"
+        dino.style.top = "430px"
 
         isGameRunning = false
         score = 0
+        verticalFire1Speed = 15
+        verticalFire2Speed = 15
+        groundSpeed = 15
         screenShake()
         return
     }
-    // collsion with verticalFire
-    if (isGameRunning && (dinoTop + dinoHeight) >= verticalFireTop && (verticalFireLeft + verticalFireWidth) >= (dinoLeft + 120) &&
-        verticalFireLeft <= (dinoLeft + dinoWidth - 30)) {
+    // collsion with verticalFire1
+    if (isGameRunning && (dinoTop + dinoHeight) >= verticalFire1Top && (verticalFire1Left + verticalFire1Width) >= (dinoLeft + 120) &&
+        verticalFire1Left <= (dinoLeft + dinoWidth - 30)) {
         dragon.style.animationPlayState = "paused";
 
         clouds.forEach((cloud) => {
@@ -248,10 +270,41 @@ function gameOver() {
         gameOverText.style.opacity = 1
         pauseButton.style.display = "none"
 
-        dino.src = "static/graphics/standingDino.gif"
+        dino.src = "static/graphics/dinoOnFire.gif"
+        dino.style.height = "150px"
+        dino.style.top = "430px"
 
         isGameRunning = false
         score = 0
+        verticalFire1Speed = 15
+        verticalFire2Speed = 15
+        groundSpeed = 15
+        screenShake()
+        return
+    }
+    // collsion with verticalFire2
+    if (isGameRunning && (dinoTop + dinoHeight) >= verticalFire2Top && (verticalFire2Left + verticalFire2Width) >= (dinoLeft + 120) &&
+        verticalFire2Left <= (dinoLeft + dinoWidth - 30)) {
+        dragon.style.animationPlayState = "paused";
+
+        clouds.forEach((cloud) => {
+            cloud.style.animationPlayState = "paused"
+        })
+
+        playButton.style.display = "inline"
+        playButton.textContent = "Play Again"
+        gameOverText.style.opacity = 1
+        pauseButton.style.display = "none"
+
+        dino.src = "static/graphics/dinoOnFire.gif"
+        dino.style.height = "150px"
+        dino.style.top = "430px"
+
+        isGameRunning = false
+        score = 0
+        verticalFire1Speed = 15
+        verticalFire2Speed = 15
+        groundSpeed = 15
         screenShake()
         return
     }
@@ -268,7 +321,7 @@ function randomizedragon() {
             dragon.style.animationPlayState = "paused"
             dragon.style.animation = "none"
             dragon.offsetLeft
-            dragon.style.animation = `slide 2s linear ${5 + Math.floor(Math.random() * 6)}s infinite`
+            dragon.style.animation = `slide 2.5s linear ${5 + Math.floor(Math.random() * 6)}s infinite`
         }
     }
 }
@@ -288,25 +341,51 @@ function delayCloud1() {
 function scoreKeeper() {
     if (isGameRunning) {
         score += 2
-        scoreText.textContent = `Score: ${score}`
-    }
+        scoreText.textContent = `${score}`
+    }   
 }
 
 function groundAnimation() {
     let ground1Left = parseInt(window.getComputedStyle(ground1).getPropertyValue("left"))
     let ground2Left = parseInt(window.getComputedStyle(ground2).getPropertyValue("left"))
 
-    ground1Left -= 15
-    ground2Left -= 15
+    switch (score) {
+        case 500:
+            groundSpeed += 0.3
+            break
+        case 1000:
+            groundSpeed += 0.3
+            break
+        case 2000:
+            groundSpeed += 0.4
+            break
+        case 3000:
+            groundSpeed += 0.5
+            break
+        case 4000:
+            groundSpeed += 0.5
+    }
+
+    ground1Left -= groundSpeed
+    ground2Left -= groundSpeed
 
     ground1.style.left = `${ground1Left}px`
     ground2.style.left = `${ground2Left}px`
 
     if (ground1Left <= -1650) {
-        ground1.style.left = "1649px"
+        ground1.style.left = "1650px"
     }
     if (ground2Left <= -1650) {
-        ground2.style.left = "1649px"
+        ground2.style.left = "1650px"
+    }
+
+    if ((ground1Left + 1650) > 0 && ground2Left > 0 && ground2Left < 1650 && ground1Left < 0) {
+        ground2Left = ground1Left + 1650
+        ground2.style.left = `${ground2Left}px`
+    }
+    if ((ground2Left + 1650) > 0 && ground1Left > 0 && ground1Left < 1650 && ground2Left < 0) {
+        ground1Left = ground2Left + 1650
+        ground1.style.left = `${ground1Left}px`
     }
 
     if (isGameRunning) {
@@ -317,7 +396,8 @@ function groundAnimation() {
 let slowdownH = 0
 function horizontalFireController() {
     let horizontalFireLeft = parseInt(window.getComputedStyle(horizontalFire).getPropertyValue("left"))
-    let verticalFireLeft = parseInt(window.getComputedStyle(verticalFire).getPropertyValue("left"))
+    let verticalFire1Left = parseInt(window.getComputedStyle(verticalFire1).getPropertyValue("left"))
+    let verticalFire2Left = parseInt(window.getComputedStyle(verticalFire2).getPropertyValue("left"))
     let dragonLeft = parseInt(window.getComputedStyle(dragon).getPropertyValue("left"))
 
     if (horizontalFireLeft > 2900) {
@@ -339,7 +419,7 @@ function horizontalFireController() {
             horizontalFire.style.left = `${horizontalFireLeft}px`
         }
         horizontalFireLeft -= slowdownH
-        if (Math.abs(verticalFireLeft - horizontalFireLeft) < 400) {
+        if (Math.abs(verticalFire1Left - horizontalFireLeft) < 400 || Math.abs(verticalFire1Left - verticalFire2Left) < 400) {
             horizontalFire.style.display == "none"
         }
     }
@@ -360,37 +440,91 @@ function horizontalFireController() {
 
 let slowdownV = 0
 function verticalFireController() {
-    let verticalFireLeft = parseInt(window.getComputedStyle(verticalFire).getPropertyValue("left"))
+    let verticalFire1Left = parseInt(window.getComputedStyle(verticalFire1).getPropertyValue("left"))
+    let verticalFire2Left = parseInt(window.getComputedStyle(verticalFire2).getPropertyValue("left"))
     let dragonLeft = parseInt(window.getComputedStyle(dragon).getPropertyValue("left"))
 
-    if (verticalFireLeft > 2900) {
+    switch (score) {
+        case 500:
+            verticalFire1Speed += 0.3
+            verticalFire2Speed += 0.3
+            break
+        case 1000:
+            verticalFire1Speed += 0.3
+            verticalFire2Speed += 0.3
+            break
+        case 2000:
+            verticalFire1Speed += 0.4
+            verticalFire2Speed += 0.4
+            break
+        case 3000:
+            verticalFire1Speed += 0.5
+            verticalFire2Speed += 0.5
+            break
+        case 4000:
+            verticalFire1Speed += 0.5
+            verticalFire2Speed += 0.5
+    }
+    
+    // verticalFire1
+    if (verticalFire1Left > 2900) {
         if (slowdownV == 0) {
             slowdownV = 4 + Math.floor(Math.random() * 7)
         }
-        verticalFireLeft -= slowdownV
+        verticalFire1Left -= slowdownV
     }
-    else if (verticalFireLeft > 2400) {
+    else if (verticalFire1Left > 2400) {
         if (dragonLeft < 2200 && dragonLeft > 2100) {
-            verticalFireLeft = 3000
-            verticalFire.style.left = `${verticalFireLeft}px`
+            verticalFire1Left = 3000
+            verticalFire1.style.left = `${verticalFire1Left}px`
         }
-        verticalFireLeft -= slowdownV
+        verticalFire1Left -= slowdownV
     }
-    else if (verticalFireLeft > 1700) {
+    else if (verticalFire1Left > 1700) {
         if (dragonLeft < 2200 && dragonLeft > 2100) {
-            verticalFireLeft = 3000
-            verticalFire.style.left = `${verticalFireLeft}px`
+            verticalFire1Left = 3000
+            verticalFire1.style.left = `${verticalFire1Left}px`
         }
-        verticalFireLeft -= slowdownV
+        verticalFire1Left -= slowdownV
     }
-    else if (verticalFireLeft > -50) {
-        verticalFireLeft -= 15
+    else if (verticalFire1Left > -50) {
+        verticalFire1Left -= verticalFire1Speed
     }
     else {
         slowdownV = 0
-        verticalFireLeft = 3000 + Math.random() * 1000
+        verticalFire1Left = 3000 + Math.random() * 1000
     }
-    verticalFire.style.left = `${verticalFireLeft}px`
+    verticalFire1.style.left = `${verticalFire1Left}px`
+
+    // verticalFire2
+    if (verticalFire2Left > 2900) {
+        if (slowdownV == 0) {
+            slowdownV = 4 + Math.floor(Math.random() * 7)
+        }
+        verticalFire2Left -= slowdownV
+    }
+    else if (verticalFire2Left > 2400) {
+        if (dragonLeft < 2200 && dragonLeft > 2100) {
+            verticalFire2Left = 3000
+            verticalFire2.style.left = `${verticalFire2Left}px`
+        }
+        verticalFire2Left -= slowdownV
+    }
+    else if (verticalFire2Left > 1700) {
+        if (dragonLeft < 2200 && dragonLeft > 2100) {
+            verticalFire2Left = 3500
+            verticalFire2.style.left = `${verticalFire2Left}px`
+        }
+        verticalFire2Left -= slowdownV
+    }
+    else if (verticalFire2Left > -50) {
+        verticalFire2Left -= verticalFire2Speed
+    }
+    else {
+        slowdownV = 0
+        verticalFire2Left = 3000 + Math.random() * 1000
+    }
+    verticalFire2.style.left = `${verticalFire2Left}px`
 
     if (isGameRunning) {
         requestAnimationFrame(verticalFireController)
@@ -406,7 +540,8 @@ function screenShake() {
     })
 
     horizontalFire.classList.add("shake")
-    verticalFire.classList.add("shake")
+    verticalFire1.classList.add("shake")
+    verticalFire2.classList.add("shake")
     dragon.classList.add("shake")
     dino.classList.add("shake")
 
@@ -421,7 +556,8 @@ function screenShake() {
         })
 
         horizontalFire.classList.remove("shake")
-        verticalFire.classList.remove("shake")
+        verticalFire1.classList.remove("shake")
+        verticalFire2.classList.remove("shake")
         dragon.classList.remove("shake")
         dino.classList.remove("shake")
 
