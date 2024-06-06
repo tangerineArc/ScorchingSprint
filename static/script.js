@@ -28,7 +28,18 @@ let groundSpeed = 15
 let dragonTopPositions = ["350px", "325px", "375px", "275px", "250px", "225px", "200px", "150px"]
 let limit = dragonTopPositions.length
 
+let gameOnMusic = new Audio("static/sounds/chase.mp3")
+let gameOverMusic = new Audio("static/sounds/dragonCastle.mp3")
+gameOnMusic.loop = true
+gameOverMusic.loop = true
+
 playButton.addEventListener("click", function() {
+    gameOverMusic.pause()
+    gameOverMusic.currentTime = 0
+
+    gameOnMusic.currentTime = 0
+    gameOnMusic.play()
+
     dino.src = "static/graphics/runningDino.gif"
     dino.style.display = "inline"
     dino.style.height = "100px"
@@ -79,6 +90,8 @@ playButton.addEventListener("click", function() {
 })
 
 pauseButton.addEventListener("click", function() {
+    gameOnMusic.pause()
+
     dragon.style.animationPlayState = "paused"
 
     clouds.forEach((cloud) => {
@@ -94,6 +107,8 @@ pauseButton.addEventListener("click", function() {
 })
 
 resumeButton.addEventListener("click", function() {
+    gameOnMusic.play()
+
     dragon.style.animationPlayState = "running"
 
     clouds.forEach((cloud) => {
@@ -113,6 +128,12 @@ resumeButton.addEventListener("click", function() {
 })
 
 resetButton.addEventListener("click", function() {
+    gameOverMusic.pause()
+    gameOverMusic.currentTime = 0
+
+    gameOnMusic.pause()
+    gameOnMusic.currentTime = 0
+
     dino.style.display = "inline"
     dino.src = "static/graphics/standingDino.gif"
     dino.style.height = "100px"
@@ -227,6 +248,9 @@ function gameOver() {
         dragon.style.top = `${dragonTop - 100}px`
         dino.style.display = "none"
 
+        gameOnMusic.pause()
+        gameOverMusic.play()
+
         screenShake()
         return
     }
@@ -247,6 +271,9 @@ function gameOver() {
         dino.src = "static/graphics/dinoOnFire.gif"
         dino.style.height = "150px"
         dino.style.top = "430px"
+
+        gameOnMusic.pause()
+        gameOverMusic.play()
 
         isGameRunning = false
         score = 0
@@ -274,6 +301,9 @@ function gameOver() {
         dino.style.height = "150px"
         dino.style.top = "430px"
 
+        gameOnMusic.pause()
+        gameOverMusic.play()
+
         isGameRunning = false
         score = 0
         verticalFire1Speed = 15
@@ -299,6 +329,9 @@ function gameOver() {
         dino.src = "static/graphics/dinoOnFire.gif"
         dino.style.height = "150px"
         dino.style.top = "430px"
+
+        gameOnMusic.pause()
+        gameOverMusic.play()
 
         isGameRunning = false
         score = 0
@@ -515,9 +548,27 @@ function verticalFireController() {
             verticalFire2Left = 3500
             verticalFire2.style.left = `${verticalFire2Left}px`
         }
+        if (Math.abs(verticalFire1Left - verticalFire2Left) <= 400) {
+            if (verticalFire1Left > verticalFire2Left) {
+                verticalFire1Left += 400
+                verticalFire1.style.left = `${verticalFire1Left}px`
+            } else {
+                verticalFire2Left += 400
+                verticalFire2.style.left = `${verticalFire2Left}px`
+            }
+        }
         verticalFire2Left -= slowdownV
     }
     else if (verticalFire2Left > -50) {
+        if (Math.abs(verticalFire1Left - verticalFire2Left) <= 400 && verticalFire1Left > 1600 && verticalFire2Left > 1600) {
+            if (verticalFire1Left > verticalFire2Left) {
+                verticalFire1Left += 400
+                verticalFire1.style.left = `${verticalFire1Left}px`
+            } else {
+                verticalFire2Left += 400
+                verticalFire2.style.left = `${verticalFire2Left}px`
+            }
+        }
         verticalFire2Left -= verticalFire2Speed
     }
     else {
@@ -564,25 +615,3 @@ function screenShake() {
         gameOverText.classList.remove("shake")
     }, 50)
 }
-
-// function onLongPress(element, callback) {
-//     let timer;
-  
-//     element.addEventListener('touchstart', () => { 
-//       timer = setTimeout(() => {
-//         timer = null;
-//         callback();
-//       }, 500);
-//     });
-  
-//     function cancel() {
-//       clearTimeout(timer);
-//     }
-  
-//     element.addEventListener('touchend', cancel);
-//     element.addEventListener('touchmove', cancel);
-//   }
-
-//   onLongPress(gameContainer, () => {
-//     console.log('Long pressed', gameContainer);
-//   });

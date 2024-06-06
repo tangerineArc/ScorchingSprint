@@ -11,8 +11,10 @@ body {
     height: 600px;
     position: relative;
     overflow: hidden;
-    background-color: #f4f1de;
+    /* background-color: #f4f1de; */
+    /* background-color: #051923; */
     /* background-color: black; */
+    background-image: url("/static/graphics/bg.png");
     border-radius: 20px;
 }
 
@@ -99,8 +101,8 @@ body {
     left: 30px;
     padding: 10px 20px 10px 20px;
     border-radius: 10px;
-    background-color: #f4f1de;
-    box-shadow: #bc4749 6px 6px;
+    background-color: #eae2b7;
+    box-shadow: #d62828 6px 6px;
 }
 
 #pauseButton {
@@ -109,9 +111,9 @@ body {
     left: 30px;
     padding: 10px 20px 10px 20px;
     border-radius: 10px;
-    background-color: #f4f1de;
+    background-color: #eae2b7;
     display: none;
-    box-shadow: #bc4749 6px 6px;
+    box-shadow: #d62828 6px 6px;
 }
 
 #resumeButton {
@@ -120,9 +122,9 @@ body {
     left: 30px;
     padding: 10px 20px 10px 20px;
     border-radius: 10px;
-    background-color: #f4f1de;
+    background-color: #eae2b7;
     display: none;
-    box-shadow: #bc4749 6px 6px;
+    box-shadow: #d62828 6px 6px;
 }
 
 #resetButton {
@@ -131,9 +133,9 @@ body {
     left: 30px;
     padding: 10px 20px 10px 20px;
     border-radius: 10px;
-    background-color: #f4f1de;
+    background-color: #eae2b7;
     display: none;
-    box-shadow: #bc4749 6px 6px;
+    box-shadow: #d62828 6px 6px;
 }
 
 #playButton:hover, #pauseButton:hover, #resumeButton:hover, #resetButton:hover {
