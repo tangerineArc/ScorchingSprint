@@ -26,12 +26,31 @@ body {
     animation: jump 500ms linear;
 }
 
-#dino {
+#standingDino {
     width: 235px;
     height: 100px;
     position: absolute;
     top: 480px;
     left: 50px;
+    opacity: 1;
+}
+
+#runningDino {
+    width: 235px;
+    height: 100px;
+    position: absolute;
+    top: 480px;
+    left: 50px;
+    opacity: 0;
+}
+
+#dinoOnFire {
+    width: 235px;
+    height: 150px;
+    position: absolute;
+    top: 430px;
+    left: 50px;
+    opacity: 0;
 }
 
 @keyframes slide {
@@ -135,7 +154,14 @@ body {
     box-shadow: #d62828 6px 6px;
 }
 
-#playButton:hover, #pauseButton:hover, #resumeButton:hover, #resetButton:hover {
+#volumeToggler {
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    background-color: #eae2b7;
+    box-shadow: #d62828 6px 6px;
+}
+
+#playButton:hover, #pauseButton:hover, #resumeButton:hover, #resetButton:hover, #volumeToggler:hover {
     padding: 11px 21px 11px 20px;
 }
 

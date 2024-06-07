@@ -47,15 +47,19 @@ def index():
 
 @app.route("/process", methods = ["POST"])
 def process():
-    """ process score data """
+    """ process and store score data """
 
     score = request.json["score"]
-    result = score * 1
+    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]
+
+    db.execute("INSERT INTO games (id, username, score) VALUES (?, ?, ?)", session["user_id"], username, score)
+
+    result = score
     return jsonify({"result": result})
 
 
 @app.route("/game")
-# @login_required
+@login_required
 def game():
     """ main game """
 

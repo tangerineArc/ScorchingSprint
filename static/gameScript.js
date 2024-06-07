@@ -2,11 +2,14 @@ let playButton = document.getElementById("playButton")
 let pauseButton = document.getElementById("pauseButton")
 let resumeButton = document.getElementById("resumeButton")
 let resetButton = document.getElementById("resetButton")
+let volumeToggler = document.getElementById("volumeToggler")
 
 let gameContainer = document.getElementById("gameContainer")
 
 let dragon = document.getElementById("dragon")
-let dino = document.getElementById("dino")
+let standingDino = document.getElementById("standingDino")
+let runningDino = document.getElementById("runningDino")
+let dinoOnFire = document.getElementById("dinoOnFire")
 
 let scoreText = document.getElementById("scoreText")
 let gameOverText = document.getElementById("gameOverText")
@@ -30,20 +33,20 @@ let limit = dragonTopPositions.length
 
 let gameOnMusic = new Audio("static/sounds/chase.mp3")
 let gameOverMusic = new Audio("static/sounds/dragonCastle.mp3")
+let musicVolume = 1
 gameOnMusic.loop = true
 gameOverMusic.loop = true
 
 playButton.addEventListener("click", function() {
+    // music settings
     gameOverMusic.pause()
     gameOverMusic.currentTime = 0
-
     gameOnMusic.currentTime = 0
     gameOnMusic.play()
 
-    dino.src = "static/graphics/runningDino.gif"
-    dino.style.display = "inline"
-    dino.style.height = "100px"
-    dino.style.top = "480px"
+    standingDino.style.opacity = 0
+    runningDino.style.opacity = 1
+    dinoOnFire.style.opacity = 0
 
     // reset animation for dragon
     dragon.style.width = "300px"
@@ -101,7 +104,8 @@ pauseButton.addEventListener("click", function() {
     pauseButton.style.display = "none"
     resumeButton.style.display = "inline"
 
-    dino.src = "static/graphics/standingDino.gif"
+    runningDino.style.opacity = 0
+    standingDino.style.opacity = 1
 
     isGameRunning = false
 })
@@ -118,7 +122,8 @@ resumeButton.addEventListener("click", function() {
     pauseButton.style.display = "inline"
     resumeButton.style.display = "none"
 
-    dino.src = "static/graphics/runningDino.gif"
+    standingDino.style.opacity = 0
+    runningDino.style.opacity = 1
 
     isGameRunning = true
 
@@ -130,14 +135,12 @@ resumeButton.addEventListener("click", function() {
 resetButton.addEventListener("click", function() {
     gameOverMusic.pause()
     gameOverMusic.currentTime = 0
-
     gameOnMusic.pause()
     gameOnMusic.currentTime = 0
 
-    dino.style.display = "inline"
-    dino.src = "static/graphics/standingDino.gif"
-    dino.style.height = "100px"
-    dino.style.top = "480px"
+    dinoOnFire.style.opacity = 0
+    runningDino.style.opacity = 0
+    standingDino.style.opacity = 1
 
     // reset animation for dragon
     dragon.style.width = "300px"
@@ -173,39 +176,72 @@ resetButton.addEventListener("click", function() {
     isGameRunning = false
 })
 
+volumeToggler.addEventListener("click", function() {
+    if (musicVolume == 1) {
+        musicVolume = 0
+        volumeToggler.textContent = "Music: Off"
+    } else {
+        musicVolume = 1
+        volumeToggler.textContent = "Music: On"
+    }
+
+    gameOnMusic.volume = musicVolume
+    gameOverMusic.volume = musicVolume
+})
+
 document.addEventListener("keydown", jumpKey);
 gameContainer.addEventListener("touchstart", jumpTouch);
 function jumpKey(event) {
-    if (dino.classList == "animate" || !isGameRunning) {
+    if (standingDino.classList == "animate" || !isGameRunning) {
         return
     }
 
     if (event.key === "ArrowUp" || event.key === " " || event.key === "w" || event.key === "W") {
-        dino.src = "static/graphics/standingDino.gif"
-        dino.classList.add("animate")
+        runningDino.style.opacity = 0
+        standingDino.style.opacity = 1
+
+        standingDino.classList.add("animate")
         setTimeout(removeJump, 480)
     }
 }
 function jumpTouch(event) {
-    if (dino.classList == "animate" || !isGameRunning || event.target == pauseButton || event.target == resetButton) {
+    if (standingDino.classList == "animate" || !isGameRunning || event.target == pauseButton || event.target == resetButton) {
         return
     }
-    dino.src = "static/graphics/standingDino.gif"
-    dino.classList.add("animate")
+
+    runningDino.style.opacity = 0
+    standingDino.style.opacity = 1
+    
+    standingDino.classList.add("animate")
     setTimeout(removeJump, 480)
 }
 function removeJump() {
-    dino.classList.remove("animate")
+    standingDino.classList.remove("animate")
     if (isGameRunning) {
-        dino.src = "static/graphics/runningDino.gif"
+        standingDino.style.opacity = 0
+        runningDino.style.opacity = 1
     }
 }
 
 function gameOver() {
-    let dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("top"))
-    let dinoLeft = parseInt(window.getComputedStyle(dino).getPropertyValue("left"))
-    let dinoWidth = parseInt(window.getComputedStyle(dino).getPropertyValue("width"))
-    let dinoHeight = parseInt(window.getComputedStyle(dino).getPropertyValue("height"))
+    let dinoTop
+    let dinoLeft
+    let dinoWidth
+    let dinoHeight
+
+    if (standingDino.style.opacity == 1) {
+        dinoTop = parseInt(window.getComputedStyle(standingDino).getPropertyValue("top"))
+        dinoLeft = parseInt(window.getComputedStyle(standingDino).getPropertyValue("left"))
+        dinoWidth = parseInt(window.getComputedStyle(standingDino).getPropertyValue("width"))
+        dinoHeight = parseInt(window.getComputedStyle(standingDino).getPropertyValue("height"))
+    }
+    else if (runningDino.style.opacity == 1) {
+        dinoTop = parseInt(window.getComputedStyle(runningDino).getPropertyValue("top"))
+        dinoLeft = parseInt(window.getComputedStyle(runningDino).getPropertyValue("left"))
+        dinoWidth = parseInt(window.getComputedStyle(runningDino).getPropertyValue("width"))
+        dinoHeight = parseInt(window.getComputedStyle(runningDino).getPropertyValue("height"))
+    }
+    
 
     let dragonTop = parseInt(window.getComputedStyle(dragon).getPropertyValue("top"))
     let dragonLeft = parseInt(window.getComputedStyle(dragon).getPropertyValue("left"))
@@ -224,8 +260,8 @@ function gameOver() {
     let verticalFire2Width = parseInt(window.getComputedStyle(verticalFire2).getPropertyValue("width"))
 
     // collision with dragon
-    if (isGameRunning && dragonLeft < (dinoLeft + dinoWidth - 20) && dragonLeft > (dinoLeft + 70) && (dragonTop + dragonHeight) > (dinoTop + 80)
-        && dragonTop < (dinoTop + dinoHeight)) {
+    if (isGameRunning && dragonLeft < (dinoLeft + dinoWidth - 20) && dragonLeft > (dinoLeft + 70) && (dragonTop + dragonHeight) > (dinoTop + 80) &&
+        dragonTop < (dinoTop + dinoHeight)) {
 
         dragon.style.animationPlayState = "paused"
 
@@ -247,7 +283,9 @@ function gameOver() {
 
         dragon.style.width = "400px"
         dragon.style.top = `${dragonTop - 100}px`
-        dino.style.display = "none"
+
+        standingDino.style.opacity = 0
+        runningDino.style.opacity = 0
 
         gameOnMusic.pause()
         gameOverMusic.play()
@@ -269,9 +307,9 @@ function gameOver() {
         gameOverText.style.opacity = 1
         pauseButton.style.display = "none"
 
-        dino.src = "static/graphics/dinoOnFire.gif"
-        dino.style.height = "150px"
-        dino.style.top = "430px"
+        standingDino.style.opacity = 0
+        runningDino.style.opacity = 0
+        dinoOnFire.style.opacity = 1
 
         gameOnMusic.pause()
         gameOverMusic.play()
@@ -299,9 +337,9 @@ function gameOver() {
         gameOverText.style.opacity = 1
         pauseButton.style.display = "none"
 
-        dino.src = "static/graphics/dinoOnFire.gif"
-        dino.style.height = "150px"
-        dino.style.top = "430px"
+        standingDino.style.opacity = 0
+        runningDino.style.opacity = 0
+        dinoOnFire.style.opacity = 1
 
         gameOnMusic.pause()
         gameOverMusic.play()
@@ -329,9 +367,9 @@ function gameOver() {
         gameOverText.style.opacity = 1
         pauseButton.style.display = "none"
 
-        dino.src = "static/graphics/dinoOnFire.gif"
-        dino.style.height = "150px"
-        dino.style.top = "430px"
+        standingDino.style.opacity = 0
+        runningDino.style.opacity = 0
+        dinoOnFire.style.opacity = 1
 
         gameOnMusic.pause()
         gameOverMusic.play()
@@ -598,7 +636,9 @@ function screenShake() {
     verticalFire1.classList.add("shake")
     verticalFire2.classList.add("shake")
     dragon.classList.add("shake")
-    dino.classList.add("shake")
+    standingDino.classList.add("shake")
+    runningDino.classList.add("shake")
+    dinoOnFire.classList.add("shake")
 
     gameOverText.classList.add("shake")
 
@@ -614,7 +654,9 @@ function screenShake() {
         verticalFire1.classList.remove("shake")
         verticalFire2.classList.remove("shake")
         dragon.classList.remove("shake")
-        dino.classList.remove("shake")
+        standingDino.classList.remove("shake")
+        runningDino.classList.remove("shake")
+        dinoOnFire.classList.remove("shake")
 
         gameOverText.classList.remove("shake")
     }, 50)
