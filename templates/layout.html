@@ -6,7 +6,7 @@
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta property="og:title" content="Arc">
+        <meta property="og:title" content="A R C">
         <meta property="og:description" content="Dino (Redux)">
         <meta property="og:image" content="/static/graphics/cloud1.png">
 
@@ -14,7 +14,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
-        <link href="/static/styles.css" rel="stylesheet">
+        {% block styles %}{% endblock %}
 
         <title>Arc: {% block title %}{% endblock %}</title>
 
@@ -33,16 +33,24 @@
                         <li class="nav-item"><a class="nav-link" href="/game">Play</a></li>
                         <li class="nav-item"><a class="nav-link" href="/fame">Top Players</a></li>
                     </ul>
-                    <ul class="navbar-nav ms-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
-                    </ul>
+                    {% if session["user_id"] %}
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
         </nav>
         
         {% block main %}{% endblock %}
+
+        {% block scripts %}{% endblock %}
         
     </body>
 

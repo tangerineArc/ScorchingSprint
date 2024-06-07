@@ -1,7 +1,15 @@
 {% extends "layout.html" %}
 
+{% block styles %}
+
+    <link href="/static/gameStyles.css" rel="stylesheet">
+
+{% endblock %}
+
 {% block title %}
+
     Game
+    
 {% endblock %}
 
 {% block main %}
@@ -33,6 +41,10 @@
             <img src="static/graphics/verticalFire.gif" alt="" id="verticalFire2">
         </div>
     </main>
+
+{% endblock %}
+
+{% block scripts %}
 
     <script src="/static/gameScript.js"></script>
 

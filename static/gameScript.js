@@ -239,6 +239,7 @@ function gameOver() {
         pauseButton.style.display = "none"
 
         isGameRunning = false
+        sendData()
         score = 0
         verticalFire1Speed = 15
         verticalFire2Speed = 15
@@ -276,6 +277,7 @@ function gameOver() {
         gameOverMusic.play()
 
         isGameRunning = false
+        sendData()
         score = 0
         verticalFire1Speed = 15
         verticalFire2Speed = 15
@@ -305,6 +307,7 @@ function gameOver() {
         gameOverMusic.play()
 
         isGameRunning = false
+        sendData()
         score = 0
         verticalFire1Speed = 15
         verticalFire2Speed = 15
@@ -334,6 +337,7 @@ function gameOver() {
         gameOverMusic.play()
 
         isGameRunning = false
+        sendData()
         score = 0
         verticalFire1Speed = 15
         verticalFire2Speed = 15
@@ -614,4 +618,21 @@ function screenShake() {
 
         gameOverText.classList.remove("shake")
     }, 50)
+}
+
+function sendData() {
+    fetch("/process", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({score: score})
+    })
+    .then(response => response.text())
+    .then(result => {
+        console.log(result)
+    })
+    .catch(error => {
+        console.error("Error", error)
+    })
 }
