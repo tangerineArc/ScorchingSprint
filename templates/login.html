@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
 
+{% block styles %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/formStyles.css">
+
+{% endblock %}
+
 {% block title %}
 
     Login
@@ -8,16 +18,20 @@
 
 {% block main %}
 
-    <main class="container py-5 text-center">
-        <form action="/login" method="post" class="needs-validation" novalidate>
-            <div class="mb-3">
-                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text" required>
-            </div>
-            <div class="mb-3">
-                <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password" required>
-            </div>
-            <button class="btn btn-primary" type="submit">Log In</button>
-        </form>
+    <main class="container py-5 text-center mt-5">
+        <h1 class="mt-5">Welcome back !</h1>
+        <div class="py-5">
+            <form action="/login" method="post" class="needs-validation" novalidate>
+                <div class="mb-4">
+                    <input autocomplete="off" autofocus class="form-control mx-auto" name="username" placeholder="Username" type="text"
+                    id="usernameField" required>
+                </div>
+                <div class="mb-5">
+                    <input class="form-control mx-auto" name="password" placeholder="Password" type="password" required>
+                </div>
+                <button id="submitButton" type="submit">Sign In</button>
+            </form>
+        </div>
     </main>
 
 {% endblock %}

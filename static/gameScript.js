@@ -662,13 +662,21 @@ function screenShake() {
     }, 50)
 }
 
+Date.prototype.today = function () { 
+    return ((this.getDate() < 10)?"0":"") + this.getDate() +"/"+(((this.getMonth()+1) < 10)?"0":"") + (this.getMonth()+1) +"/"+ this.getFullYear();
+}
+Date.prototype.timeNow = function () {
+    return ((this.getHours() < 10)?"0":"") + this.getHours() +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes() +":"+ ((this.getSeconds() < 10)?"0":"")
+    + this.getSeconds();
+}
 function sendData() {
+    let datetime = new Date().today() + " " + new Date().timeNow()
     fetch("/process", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({score: score})
+        body: JSON.stringify({score: score, datetime: datetime})
     })
     .then(response => response.text())
     .then(result => {

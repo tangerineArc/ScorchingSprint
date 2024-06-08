@@ -38,11 +38,13 @@ def login_required(f):
 
 
 @app.route("/")
-# @login_required
+@login_required
 def index():
     """ game homepage """
 
-    return render_template("index.html")
+    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]
+
+    return render_template("index.html", username = username)
 
 
 @app.route("/process", methods = ["POST"])
@@ -50,12 +52,18 @@ def process():
     """ process and store score data """
 
     score = request.json["score"]
-    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]
+    datetime = request.json["datetime"]
+    userData = db.execute("SELECT username, highscore FROM users WHERE id = ?", session["user_id"])[0]
+    username = userData["username"]
+    highScore = userData["highscore"]
 
-    db.execute("INSERT INTO games (id, username, score) VALUES (?, ?, ?)", session["user_id"], username, score)
+    if score > highScore:
+        db.execute("UPDATE users SET highscore = ? WHERE id = ?", score, session["user_id"])
+
+    db.execute("INSERT INTO games (id, username, score, timestamp) VALUES (?, ?, ?, ?)", session["user_id"], username, score, datetime)
 
     result = score
-    return jsonify({"result": result})
+    return jsonify({ "result": result })
 
 
 @app.route("/game")
@@ -63,7 +71,9 @@ def process():
 def game():
     """ main game """
 
-    return render_template("game.html")
+    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]
+
+    return render_template("game.html", username = username)
 
 
 @app.route("/fame")
@@ -71,7 +81,44 @@ def game():
 def fame():
     """ top players and game stats"""
 
-    return render_template("fame.html")
+    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]
+
+    return render_template("fame.html", username = username)
+
+
+@app.route("/stats")
+@login_required
+def stats():
+    """ display player statistics """
+
+    gameData = db.execute("SELECT score, timestamp FROM games WHERE id = ? ORDER BY timestamp DESC LIMIT 5", session["user_id"])
+    userData = db.execute("SELECT username, highscore FROM users WHERE id = ?", session["user_id"])[0]
+    highestScore = userData["highscore"]
+    username = userData["username"]
+
+    title = ""
+    if highestScore >= 9000:
+        title += "Legendary Grandmaster"
+    elif highestScore >= 8000:
+        title += "International Grandmaster"
+    elif highestScore >= 7000:
+        title += "Grandmaster"
+    elif highestScore >= 6000:
+        title += "International Master"
+    elif highestScore >= 5000:
+        title += "Master"
+    elif highestScore >= 4000:
+        title += "Candidate Master"
+    elif highestScore >= 3000:
+        title += "Expert"
+    elif highestScore >= 2000:
+        title += "Specialist"
+    elif highestScore >= 1000:
+        title += "Pupil"
+    else:
+        title += "Newbie"
+
+    return render_template("stats.html", gameData = gameData, highestScore = highestScore, title = title, username = username)
 
 
 @app.route("/login", methods = ["GET", "POST"])

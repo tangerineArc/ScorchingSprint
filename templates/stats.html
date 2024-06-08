@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block styles %}
+
+    <link rel="stylesheet" href="/static/statsStyles.css">
+
+{% endblock %}
+
+{% block title %}
+
+    My Stats
+
+{% endblock %}
+
+{% block main %}
+
+    <main class="container py-5 text-center">
+        <h1>Recent Plays</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in gameData %}
+                    <tr>
+                        <td>{{ record.timestamp }}</td>
+                        <td>{{ record.score }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h1>Highest Score</h1>
+        <p>{{ highestScore }}</p>
+
+        <h1>Current Title</h1>
+        <p id="title">{{ title }}</p>
+
+    </main>
+
+{% endblock %}

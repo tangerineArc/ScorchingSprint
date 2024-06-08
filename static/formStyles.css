@@ -1,0 +1,40 @@
+h1 {
+    color: #d62828;
+    font-family: "Jost", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-size: 36px;
+    font-style: normal;
+}
+
+button {
+    width: 300px;
+    height: 50px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+    background-color: #fdfcdc;
+    border: none;
+}
+
+button:hover {
+    box-shadow: #d62828 6px 6px;
+    transition: box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.form-control {
+    width: 300px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: #eee;
+    border: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.form-control:focus {
+    background-color: #fdfcdc;
+    border-color: #ff5722;
+    border-radius: 5px;
+    box-shadow: 0 0 0 0.1rem #ff5722;
+    box-shadow: #d62828 6px 6px !important;
+}
