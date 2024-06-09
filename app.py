@@ -13,6 +13,7 @@ Session(app)
 
 db = SQL("sqlite:///arc.db")
 
+
 @app.after_request
 def after_request(response):
     """ ensure that responses are not cached """
@@ -58,12 +59,41 @@ def process():
     highScore = userData["highscore"]
 
     if score > highScore:
-        db.execute("UPDATE users SET highscore = ? WHERE id = ?", score, session["user_id"])
+        title = ""
+        if score >= 9000:
+            title += "Legendary Grandmaster"
+        elif score >= 8000:
+            title += "International Grandmaster"
+        elif score >= 7000:
+            title += "Grandmaster"
+        elif score >= 6000:
+            title += "International Master"
+        elif score >= 5000:
+            title += "Master"
+        elif score >= 4000:
+            title += "Candidate Master"
+        elif score >= 3000:
+            title += "Expert"
+        elif score >= 2000:
+            title += "Specialist"
+        elif score >= 1000:
+            title += "Pupil"
+
+        db.execute("UPDATE users SET highscore = ?, title = ? WHERE id = ?", score, title, session["user_id"])
 
     db.execute("INSERT INTO games (id, username, score, timestamp) VALUES (?, ?, ?, ?)", session["user_id"], username, score, datetime)
 
     result = score
     return jsonify({ "result": result })
+
+
+@app.route("/sendTitleData")
+def sendTitleData():
+    """ send player tile data """
+
+    title = db.execute("SELECT title, highscore FROM users WHERE id = ?", session["user_id"])[0]["title"]
+
+    return jsonify({ "title": title })
 
 
 @app.route("/game")
@@ -92,31 +122,10 @@ def stats():
     """ display player statistics """
 
     gameData = db.execute("SELECT score, timestamp FROM games WHERE id = ? ORDER BY timestamp DESC LIMIT 5", session["user_id"])
-    userData = db.execute("SELECT username, highscore FROM users WHERE id = ?", session["user_id"])[0]
+    userData = db.execute("SELECT username, highscore, title FROM users WHERE id = ?", session["user_id"])[0]
     highestScore = userData["highscore"]
     username = userData["username"]
-
-    title = ""
-    if highestScore >= 9000:
-        title += "Legendary Grandmaster"
-    elif highestScore >= 8000:
-        title += "International Grandmaster"
-    elif highestScore >= 7000:
-        title += "Grandmaster"
-    elif highestScore >= 6000:
-        title += "International Master"
-    elif highestScore >= 5000:
-        title += "Master"
-    elif highestScore >= 4000:
-        title += "Candidate Master"
-    elif highestScore >= 3000:
-        title += "Expert"
-    elif highestScore >= 2000:
-        title += "Specialist"
-    elif highestScore >= 1000:
-        title += "Pupil"
-    else:
-        title += "Newbie"
+    title = userData["title"]
 
     return render_template("stats.html", gameData = gameData, highestScore = highestScore, title = title, username = username)
 

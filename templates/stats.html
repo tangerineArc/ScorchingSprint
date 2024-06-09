@@ -14,30 +14,50 @@
 
 {% block main %}
 
-    <main class="container py-5 text-center">
-        <h1>Recent Plays</h1>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Timestamp</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for record in gameData %}
+    <main class="container py-5 mt-5 px-5">
+
+        <div class="row text-center pe-5">
+            <div id="user" class="colored col-3">
+                <p class="h1">{{ username }}</p>
+            </div>
+            <div class="col-9 pt-3 pe-5" id="scoreBarContainer">
+                <div class="progress" role="progressbar">
+                    <div id="scoreBar" class="progress-bar progress-bar-striped progress-bar-animated"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <span id="maxText" class="px-3 py-2 fs-4">MAX</span>
+            <span id="ratingText" class="colored ms-2 px-3 py-2 fs-4"><strong>{{ highestScore }}</strong></span>
+            <span class="colored fs-4 ms-2 px-3 py-2" id="titleText"><strong>{{ title }}</strong></span>
+        </div>
+
+        <div class="mt-5 text-center">
+            <table class="mx-auto">
+                <colgroup>
+                    <col span="1" style="width: 45%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 45%;">
+                </colgroup>
+                <thead>
                     <tr>
-                        <td>{{ record.timestamp }}</td>
-                        <td>{{ record.score }}</td>
+                        <th>#</th>
+                        <th>SCORE</th>
+                        <th>TIMESTAMP</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <h1>Highest Score</h1>
-        <p>{{ highestScore }}</p>
-
-        <h1>Current Title</h1>
-        <p id="title">{{ title }}</p>
+                </thead>
+                <tbody>
+                    {% for record in gameData %}
+                        <tr>
+                            <th>{{ loop.index }}</th>
+                            <td>{{ record.score }}</td>
+                            <td>{{ record.timestamp }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
     </main>
 
