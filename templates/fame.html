@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
 
+{% block styles %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/fameStyles.css">
+
+{% endblock %}
+
 {% block title %}
 
     Top Players
@@ -8,7 +18,31 @@
 
 {% block main %}
 
-    <main class="container py-5 text-center">
+    <main class="container py-5">
+
+        <h1 class="text-center">Global Leaderboard</h1>
+        <div class="mt-5 text-center">
+            <table class="mx-auto">
+                <colgroup>
+                    <col span="1" style="width: 50%;">
+                    <col span="1" style="width: 50%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Player ID</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in topUsers %}
+                        <tr>
+                            <td><strong style="color: {{ colors[loop.index - 1] }};">{{ record.username }}</strong></td>
+                            <td>{{ record.highscore }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
     </main>
 

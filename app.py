@@ -111,9 +111,21 @@ def game():
 def fame():
     """ top players and game stats"""
 
-    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]
+    username = db.execute("SELECT username, highscore FROM users WHERE id = ?", session["user_id"])[0]["username"]
+    topUsers = db.execute("SELECT username, highscore, title FROM users ORDER BY highscore DESC LIMIT 10")
 
-    return render_template("fame.html", username = username)
+    colors = []
+    for user in topUsers:
+        title = user["title"]
+        if title == "Newbie": colors.append("grey")
+        elif title == "Pupil": colors.append("green")
+        elif title == "Specialist": colors.append("turquoise")
+        elif title == "Expert": colors.append("blue")
+        elif title == "Candidate Master": colors.append("purple")
+        elif title in ["Master", "International Master"]: colors.append("orange")
+        elif title in ["Grandmaster", "International Grandmaster", "Legendary Grandmaster"]: colors.append("red")
+
+    return render_template("fame.html", username = username, topUsers = topUsers, colors = colors)
 
 
 @app.route("/stats")

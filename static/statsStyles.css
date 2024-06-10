@@ -14,8 +14,17 @@
 }
 
 table {
-    width: 100%;
+    width: 50%;
     border-collapse: separate;
-    border-spacing: 0 1em;
+    border-spacing: 1em 1em;
     font-size: 18px;
+    background-color: #fefae0;
+    border-radius: 10px;
+    padding: 10px 20px 10px 20px;
+}
+
+th {
+    color: #f77f00;
+    border-bottom: 1px solid #f77f00;
+    padding-bottom: 15px;
 }
