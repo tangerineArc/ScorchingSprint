@@ -14,16 +14,15 @@
 
 {% block main %}
 
-    <main class="container py-5 mt-5 px-5">
+    <main class="container pt-5 mt-1">
 
-        <div class="row text-center">
-            <div id="user" class="colored col-lg-3">
-                <p class="h1">{{ username }}</p>
-            </div>
-            <div class="col-lg-9 pt-3" id="scoreBarContainer">
-                <div class="progress" role="progressbar">
-                    <div id="scoreBar" class="progress-bar progress-bar-striped progress-bar-animated"></div>
-                </div>
+        <div class="text-center mx-auto colored">
+            <p class="h1">{{ username }}</p>
+        </div>
+        
+        <div class="mt-5 px-5">
+            <div class="progress" role="progressbar">
+                <div id="scoreBar" class="progress-bar progress-bar-striped progress-bar-animated"></div>
             </div>
         </div>
 
@@ -47,7 +46,7 @@
                 </thead>
                 <tbody>
                     {% for record in gameData %}
-                        <tr>
+                        <tr style="color: #f77f00;">
                             <td>{{ record.score }}</td>
                             <td>{{ record.timestamp }}</td>
                         </tr>

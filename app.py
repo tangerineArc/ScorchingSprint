@@ -39,16 +39,18 @@ def login_required(f):
 
 
 @app.route("/")
-@login_required
 def index():
-    """ game homepage """
+    """ homepage """
 
-    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]
-
-    return render_template("index.html", username = username)
+    if session.get("user_id") is not None:
+        username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]
+        return render_template("index.html", username = username)
+    else:
+        return render_template("index.html")
 
 
 @app.route("/process", methods = ["POST"])
+@login_required
 def process():
     """ process and store score data """
 
@@ -88,10 +90,11 @@ def process():
 
 
 @app.route("/sendTitleData")
+@login_required
 def sendTitleData():
     """ send player tile data """
 
-    title = db.execute("SELECT title, highscore FROM users WHERE id = ?", session["user_id"])[0]["title"]
+    title = db.execute("SELECT title FROM users WHERE id = ?", session["user_id"])[0]["title"]
 
     return jsonify({ "title": title })
 
@@ -107,11 +110,9 @@ def game():
 
 
 @app.route("/fame")
-# @login_required
 def fame():
     """ top players and game stats"""
 
-    username = db.execute("SELECT username, highscore FROM users WHERE id = ?", session["user_id"])[0]["username"]
     topUsers = db.execute("SELECT username, highscore, title FROM users ORDER BY highscore DESC LIMIT 10")
 
     colors = []
@@ -125,7 +126,11 @@ def fame():
         elif title in ["Master", "International Master"]: colors.append("orange")
         elif title in ["Grandmaster", "International Grandmaster", "Legendary Grandmaster"]: colors.append("red")
 
-    return render_template("fame.html", username = username, topUsers = topUsers, colors = colors)
+    if session.get("user_id") is not None:
+        username = db.execute("SELECT username, highscore FROM users WHERE id = ?", session["user_id"])[0]["username"]
+        return render_template("fame.html", username = username, topUsers = topUsers, colors = colors)
+    else:
+        return render_template("fame.html", topUsers = topUsers, colors = colors)
 
 
 @app.route("/stats")
@@ -181,6 +186,10 @@ def register():
     """ register user """
     
     if request.method == "GET":
+        if session.get("user_id") is not None:
+            username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]
+            return render_template("register.html", username = username)
+        
         return render_template("register.html")
     else:
         if not request.form.get("username"):

@@ -1,12 +1,31 @@
-#gameName1 {
+#gameName {
     font-family: "Marcellus", serif;
     font-size: 80px;
     font-style: normal;
-    margin-top: 180px;
+    margin-top: 40px;
 }
 
-#gameName2 {
-    font-family: "Marcellus", serif;
-    font-size: 80px;
-    font-style: normal;
+body {
+    height: 100vh;
+    background-image: url("/static/graphics/homeBG.jpeg");
+    background-position: center;
+    background-size: cover;
+}
+
+#playRedirect {
+    padding: 10px 100px 10px 100px;
+    font-size: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: #fdfcdc;
+}
+
+#playRedirect > a {
+    text-decoration: none;
+    color: black;
+}
+
+#playRedirect:hover {
+    box-shadow: #d62828 10px 10px;
+    transition: box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }

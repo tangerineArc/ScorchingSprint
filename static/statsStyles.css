@@ -18,7 +18,7 @@ table {
     border-collapse: separate;
     border-spacing: 1em 1em;
     font-size: 18px;
-    background-color: #fefae0;
+    background-color: #291026;
     border-radius: 10px;
     padding: 10px 20px 10px 20px;
 }
@@ -27,4 +27,11 @@ th {
     color: #f77f00;
     border-bottom: 1px solid #f77f00;
     padding-bottom: 15px;
+}
+
+body {
+    height: 100vh;
+    background-image: url("/static/graphics/homeBG.jpeg");
+    background-position: center;
+    background-size: cover;
 }

@@ -37,7 +37,7 @@
                     {% for record in topUsers %}
                         <tr>
                             <td><strong style="color: {{ colors[loop.index - 1] }};">{{ record.username }}</strong></td>
-                            <td>{{ record.highscore }}</td>
+                            <td style="color: {{ colors[loop.index - 1] }};">{{ record.highscore }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

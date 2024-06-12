@@ -1,5 +1,9 @@
 body {
     user-select: none;
+    height: 100vh;
+    background-image: url("/static/graphics/homeBG.jpeg");
+    background-position: center;
+    background-size: cover;
 }
 
 .shake {
@@ -11,8 +15,10 @@ body {
     height: 600px;
     position: relative;
     overflow: hidden;
-    background-image: url("/static/graphics/bg.png");
-    border-radius: 20px;
+    margin-top: 50px;
+    /* background-image: url("/static/graphics/gameBG.png"); */
+    /* background-image: url("/static/graphics/homeBG.png"); */
+    /* border-radius: 20px; */
 }
 
 @keyframes jump {
@@ -119,6 +125,7 @@ body {
     border-radius: 10px;
     background-color: #eae2b7;
     box-shadow: #d62828 6px 6px;
+    border: none;
 }
 
 #pauseButton {
@@ -130,6 +137,7 @@ body {
     background-color: #eae2b7;
     display: none;
     box-shadow: #d62828 6px 6px;
+    border: none;
 }
 
 #resumeButton {
@@ -141,6 +149,7 @@ body {
     background-color: #eae2b7;
     display: none;
     box-shadow: #d62828 6px 6px;
+    border: none;
 }
 
 #resetButton {
@@ -152,6 +161,7 @@ body {
     background-color: #eae2b7;
     display: none;
     box-shadow: #d62828 6px 6px;
+    border: none;
 }
 
 #volumeToggler {
@@ -159,6 +169,7 @@ body {
     border-radius: 10px;
     background-color: #eae2b7;
     box-shadow: #d62828 6px 6px;
+    border: none;
 }
 
 #playButton:hover, #pauseButton:hover, #resumeButton:hover, #resetButton:hover, #volumeToggler:hover {

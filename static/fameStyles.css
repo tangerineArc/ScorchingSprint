@@ -3,8 +3,9 @@ h1 {
     font-family: "Jost", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
-    font-size: 48px;
+    font-size: 54px;
     font-style: normal;
+    margin-top: 20px;
 }
 
 table {
@@ -14,10 +15,18 @@ table {
     font-size: 20px;
     border-radius: 10px;
     padding: 10px 20px 10px 20px;
+    background-color: #291026;
 }
 
 th {
     color: #f77f00;
     border-bottom: 1px solid #f77f00;
     padding-bottom: 15px;
+}
+
+body {
+    height: 100vh;
+    background-image: url("/static/graphics/homeBG.jpeg");
+    background-position: center;
+    background-size: cover;
 }
