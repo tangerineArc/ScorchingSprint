@@ -34,4 +34,6 @@ body {
     background-image: url("/static/graphics/homeBG.jpeg");
     background-position: center;
     background-size: cover;
+    background-color: #2d1026;
+    background-repeat: no-repeat;
 }

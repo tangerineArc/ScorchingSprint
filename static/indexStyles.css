@@ -2,7 +2,6 @@
     font-family: "Marcellus", serif;
     font-size: 80px;
     font-style: normal;
-    margin-top: 40px;
 }
 
 body {
@@ -10,6 +9,8 @@ body {
     background-image: url("/static/graphics/homeBG.jpeg");
     background-position: center;
     background-size: cover;
+    background-color: #2d1026;
+    background-repeat: no-repeat;
 }
 
 #playRedirect {

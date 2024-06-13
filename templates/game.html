@@ -14,7 +14,7 @@
 
 {% block main %}
 
-    <main class="container py-5 px-0 mx-5">
+    <main class="container-fluid py-5">
         <div id="gameContainer" oncontextmenu="return false;">
             <img src="static/graphics/cloud1.png" alt="" id="cloud1">
             <img src="static/graphics/cloud2.png" alt="" id="cloud2">
@@ -24,10 +24,6 @@
             <img src="static/graphics/dragon.gif" alt="" id="dragon">
 
             <span id="scoreText">0</span>
-            <button id="playButton">Play</button>
-            <button id="pauseButton">Pause</button>
-            <button id="resumeButton">Resume</button>
-            <button id="resetButton">Reset</button>
             <span id="gameOverText">G A M E &nbsp;&nbsp;&nbsp; O V E R</span>
 
             <span>
@@ -44,7 +40,11 @@
             <img src="static/graphics/verticalFire.gif" alt="" id="verticalFire2">
         </div>
 
-        <button class="mt-4 ms-3" id="volumeToggler">Music: On</button>
+        <button class="mt-4 ms-3" id="playButton">Play</button>
+        <button class="mt-4 ms-3" id="pauseButton">Pause</button>
+        <button class="mt-4 ms-3" id="resumeButton">Resume</button>
+        <button class="mt-4 ms-3" id="resetButton">Reset</button>
+        <button class="mt-4 ms-3" id="volumeToggler">Music On</button>
     </main>
 
 {% endblock %}

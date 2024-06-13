@@ -179,10 +179,10 @@ resetButton.addEventListener("click", function() {
 volumeToggler.addEventListener("click", function() {
     if (musicVolume == 1) {
         musicVolume = 0
-        volumeToggler.textContent = "Music: Off"
+        volumeToggler.textContent = "Music Off"
     } else {
         musicVolume = 1
-        volumeToggler.textContent = "Music: On"
+        volumeToggler.textContent = "Music On"
     }
 
     gameOnMusic.volume = musicVolume

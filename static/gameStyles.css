@@ -1,9 +1,9 @@
 body {
     user-select: none;
-    height: 100vh;
-    background-image: url("/static/graphics/homeBG.jpeg");
-    background-position: center;
-    background-size: cover;
+    /* height: 100vh; */
+    background-image: linear-gradient(#ffedcc, #ffb83a, #ff6b25, #d42716, #7d0004, #4c001c, #291025);
+    background-color: #291025;
+    background-repeat: no-repeat;
 }
 
 .shake {
@@ -11,14 +11,16 @@ body {
 }
 
 #gameContainer {
-    width: 1650px;
+    /* width: 1650px; */
     height: 600px;
     position: relative;
     overflow: hidden;
-    margin-top: 50px;
-    /* background-image: url("/static/graphics/gameBG.png"); */
-    /* background-image: url("/static/graphics/homeBG.png"); */
-    /* border-radius: 20px; */
+    background-image: url("/static/graphics/gameBG2.jpg");
+    background-position: center;
+    background-size: cover;
+    border-radius: 10px;
+    background-color: #2d1026;
+    background-repeat: no-repeat;
 }
 
 @keyframes jump {
@@ -118,49 +120,33 @@ body {
 }
 
 #playButton {
-    position: absolute;
-    top: 30px;
-    left: 30px;
     padding: 10px 20px 10px 20px;
     border-radius: 10px;
     background-color: #eae2b7;
-    box-shadow: #d62828 6px 6px;
     border: none;
 }
 
 #pauseButton {
-    position: absolute;
-    top: 30px;
-    left: 30px;
     padding: 10px 20px 10px 20px;
     border-radius: 10px;
     background-color: #eae2b7;
     display: none;
-    box-shadow: #d62828 6px 6px;
     border: none;
 }
 
 #resumeButton {
-    position: absolute;
-    top: 30px;
-    left: 30px;
     padding: 10px 20px 10px 20px;
     border-radius: 10px;
     background-color: #eae2b7;
     display: none;
-    box-shadow: #d62828 6px 6px;
     border: none;
 }
 
 #resetButton {
-    position: absolute;
-    top: 100px;
-    left: 30px;
     padding: 10px 20px 10px 20px;
     border-radius: 10px;
     background-color: #eae2b7;
     display: none;
-    box-shadow: #d62828 6px 6px;
     border: none;
 }
 
@@ -168,24 +154,24 @@ body {
     padding: 10px 20px 10px 20px;
     border-radius: 10px;
     background-color: #eae2b7;
-    box-shadow: #d62828 6px 6px;
     border: none;
 }
 
 #playButton:hover, #pauseButton:hover, #resumeButton:hover, #resetButton:hover, #volumeToggler:hover {
-    padding: 11px 21px 11px 20px;
+    box-shadow: #d62828 6px 6px;
+    transition: box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 #ground1 {
     left: 0px;
-    width: 1650px;
+    /* width: 1650px; */
     height: auto;
     position: absolute;
     top: 570px;
 }
 
 #ground2 {
-    width: 1650px;
+    /* width: 1650px; */
     height: auto;
     position: absolute;
     left: 1650px;
@@ -193,46 +179,46 @@ body {
 }
 
 @keyframes cloudMovement {
-    0%{left: 1700px;}
+    0%{left: 1800px;}
     100%{left: -250px;}
 }
 
 #cloud1 {
-    width: 200px;
+    width: 120px;
     height: auto;
     position: absolute;
-    left: 1700px;
-    top: 100px;
+    left: 1800px;
+    top: 50px;
     animation: cloudMovement 30s linear 0s infinite;
     animation-play-state: paused;
 }
 
 #cloud2 {
-    width: 200px;
+    width: 120px;
     height: auto;
     position: absolute;
-    left: 1700px;
-    top: 50px;
+    left: 1800px;
+    top: 70px;
     animation: cloudMovement 30s linear 10s infinite;
     animation-play-state: paused;
 }
 
 #cloud3 {
-    width: 200px;
+    width: 120px;
     height: auto;
     position: absolute;
-    left: 1700px;
-    top: 100px;
+    left: 1800px;
+    top: 30px;
     animation: cloudMovement 30s linear 20s infinite;
     animation-play-state: paused;
 }
 
 #cloud4 {
-    width: 200px;
+    width: 120px;
     height: auto;
     position: absolute;
-    left: 1700px;
-    top: 150px;
+    left: 1800px;
+    top: 10px;
     animation: cloudMovement 30s linear 30s infinite;
     animation-play-state: paused;
 }

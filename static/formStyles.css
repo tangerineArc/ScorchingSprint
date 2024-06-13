@@ -41,6 +41,8 @@ h1 {
 
 body {
     height: 100vh;
+    background-color: #2d1026;
+    background-repeat: no-repeat;
     background-image: url("/static/graphics/homeBG.jpeg");
     background-position: center;
     background-size: cover;
