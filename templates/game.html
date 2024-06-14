@@ -2,6 +2,10 @@
 
 {% block styles %}
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
     <link href="/static/gameStyles.css" rel="stylesheet">
 
 {% endblock %}
@@ -24,7 +28,8 @@
             <img src="static/graphics/dragon.gif" alt="" id="dragon">
 
             <span id="scoreText">0</span>
-            <span id="gameOverText">G A M E &nbsp;&nbsp;&nbsp; O V E R</span>
+
+            <span id="gameOverText">Game Over</span>
 
             <span>
                 <img src="static/graphics/ground.png" alt="" id="ground1">
@@ -38,6 +43,10 @@
             <img src="static/graphics/horizontalFire.gif" alt="" id="horizontalFire">
             <img src="static/graphics/verticalFire.gif" alt="" id="verticalFire1">
             <img src="static/graphics/verticalFire.gif" alt="" id="verticalFire2">
+
+            <span id="instruction" class="ms-4 mt-4">
+                <strong>Touch</strong> Game Screen or Press <strong>W</strong> / <strong>SPACE</strong> / <strong>UP ARROW KEY</strong> to jump
+            </span>
         </div>
 
         <button class="mt-4 ms-3" id="playButton">Play</button>
@@ -45,6 +54,7 @@
         <button class="mt-4 ms-3" id="resumeButton">Resume</button>
         <button class="mt-4 ms-3" id="resetButton">Reset</button>
         <button class="mt-4 ms-3" id="volumeToggler">Music On</button>
+
     </main>
 
 {% endblock %}

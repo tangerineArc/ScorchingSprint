@@ -13,6 +13,7 @@ let dinoOnFire = document.getElementById("dinoOnFire")
 
 let scoreText = document.getElementById("scoreText")
 let gameOverText = document.getElementById("gameOverText")
+let instruction = document.getElementById("instruction")
 
 let ground1 = document.getElementById("ground1")
 let ground2 = document.getElementById("ground2")
@@ -25,6 +26,7 @@ let clouds = [document.getElementById("cloud1"), document.getElementById("cloud2
 
 let isGameRunning = false
 let score = 0
+let horizontalFireSpeed = 25
 let verticalFire1Speed = 15
 let verticalFire2Speed = 15
 let groundSpeed = 15
@@ -67,6 +69,7 @@ playButton.addEventListener("click", function() {
     })
 
     gameOverText.style.opacity = 0
+    instruction.style.opacity = 0
     playButton.style.display = "none"
     pauseButton.style.display = "inline"
     resetButton.style.display = "inline"
@@ -88,6 +91,7 @@ playButton.addEventListener("click", function() {
     }
 
     requestAnimationFrame(groundAnimation)
+    requestAnimationFrame(bgAnimation)
     requestAnimationFrame(horizontalFireController)
     requestAnimationFrame(verticalFireController)
 })
@@ -128,6 +132,7 @@ resumeButton.addEventListener("click", function() {
     isGameRunning = true
 
     requestAnimationFrame(groundAnimation)
+    requestAnimationFrame(bgAnimation)
     requestAnimationFrame(horizontalFireController)
     requestAnimationFrame(verticalFireController)
 })
@@ -161,6 +166,7 @@ resetButton.addEventListener("click", function() {
     })
 
     gameOverText.style.opacity = 0
+    instruction.style.opacity = 1
     playButton.style.display = "inline"
     pauseButton.style.display = "none"
     resumeButton.style.display = "none"
@@ -277,6 +283,7 @@ function gameOver() {
         isGameRunning = false
         sendData()
         score = 0
+        horizontalFireSpeed = 25
         verticalFire1Speed = 15
         verticalFire2Speed = 15
         groundSpeed = 15
@@ -317,6 +324,7 @@ function gameOver() {
         isGameRunning = false
         sendData()
         score = 0
+        horizontalFireSpeed = 25
         verticalFire1Speed = 15
         verticalFire2Speed = 15
         groundSpeed = 15
@@ -347,6 +355,7 @@ function gameOver() {
         isGameRunning = false
         sendData()
         score = 0
+        horizontalFireSpeed = 25
         verticalFire1Speed = 15
         verticalFire2Speed = 15
         groundSpeed = 15
@@ -377,6 +386,7 @@ function gameOver() {
         isGameRunning = false
         sendData()
         score = 0
+        horizontalFireSpeed = 25
         verticalFire1Speed = 15
         verticalFire2Speed = 15
         groundSpeed = 15
@@ -468,12 +478,40 @@ function groundAnimation() {
     }
 }
 
+let bgPos = 0
+function bgAnimation() {
+    gameContainer.style.backgroundPosition = `${bgPos}px 0px`
+    bgPos -= 1
+
+    if (isGameRunning) {
+        requestAnimationFrame(bgAnimation)
+    }
+}
+
 let slowdownH = 0
 function horizontalFireController() {
     let horizontalFireLeft = parseInt(window.getComputedStyle(horizontalFire).getPropertyValue("left"))
     let verticalFire1Left = parseInt(window.getComputedStyle(verticalFire1).getPropertyValue("left"))
     let verticalFire2Left = parseInt(window.getComputedStyle(verticalFire2).getPropertyValue("left"))
     let dragonLeft = parseInt(window.getComputedStyle(dragon).getPropertyValue("left"))
+
+    switch (score) {
+        case 500:
+            horizontalFireSpeed += 0.3
+            break
+        case 1000:
+            horizontalFireSpeed += 0.3
+            break
+        case 2000:
+            horizontalFireSpeed += 0.4
+            break
+        case 3000:
+            horizontalFireSpeed += 0.5
+            break
+        case 4000:
+            horizontalFireSpeed += 0.5
+
+    }
 
     if (horizontalFireLeft > 2900) {
         if (slowdownH == 0) {
@@ -499,7 +537,7 @@ function horizontalFireController() {
         }
     }
     else if (horizontalFireLeft > -50) {
-        horizontalFireLeft -= 25
+        horizontalFireLeft -= horizontalFireSpeed
     }
     else {
         slowdownH = 0

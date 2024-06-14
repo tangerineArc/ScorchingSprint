@@ -80,6 +80,8 @@ def process():
             title += "Specialist"
         elif score >= 1000:
             title += "Pupil"
+        else:
+            title += "Newbie"
 
         db.execute("UPDATE users SET highscore = ?, title = ? WHERE id = ?", score, title, session["user_id"])
 
@@ -155,15 +157,18 @@ def login():
         return render_template("login.html")
     else:
         if not request.form.get("username"):
-            return "must enter username"
+            message = "username cannot be left blank"
+            return render_template("apology.html", message = message)
         elif not request.form.get("password"):
-            return "must enter password"
+            message = "password cnnot be left blank"
+            return render_template("apology.html", message = message)
         
         username = request.form.get("username")
         userData = db.execute("SELECT * FROM users WHERE username = ?", username)
 
         if len(userData) != 1 or not check_password_hash(userData[0]["hash"], request.form.get("password")):
-            return "invalid username and/or password"
+            message = "invalid username and/or password"
+            return render_template("apology.html", message = message)
         
         session.clear()
         session["user_id"] = userData[0]["id"]
@@ -193,19 +198,24 @@ def register():
         return render_template("register.html")
     else:
         if not request.form.get("username"):
-            return "must enter username"
+            message = "username cannot be left blank"
+            return render_template("apology.html", message = message)
         elif not request.form.get("password"):
-            return "must enter password"
+            message = "password cannot be left blank"
+            return render_template("apology.html", message = message)
         elif not request.form.get("confirmation"):
-            return "must confirm password"
+            message = "password confirmation cannot be left blank"
+            return render_template("apology.html", message = message)
         elif request.form.get("password") != request.form.get("confirmation"):
-            return "password fields do not match"
+            message = "password fields should match"
+            return render_template("apology.html", message = message)
         
         username = request.form.get("username")
         existingUsers = db.execute("SELECT * FROM users")
         for user in existingUsers:
             if user["username"] == username:
-                return "username already taken"
+                message = "username has already been taken"
+                return render_template("apology.html", message = message)
             
         session.clear()
 
