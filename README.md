@@ -65,3 +65,26 @@ Below is a list of all the folders and files that the project contains:
     - `gameScript.js` - Primary script powering the actual game. Used in `game.html` page.
 
 ## Artwork & Music Credits
+
+#### `/static/graphics/runningDino.gif`
+> **Dino-4-Run** | https://dribbble.com/shots/4146682-Dino-4-Run  
+> Artowrk by **Gustavo Zanzero** | https://dribbble.com/zgus
+
+#### `/static/graphics/dragon.gif`
+> **First animation: dragon flight** | https://www.deviantart.com/allmannerofbeasties/art/First-animation-dragon-flight-521575008  
+> Artwork by **AllMannerOfBeasties** | https://www.deviantart.com/allmannerofbeasties
+
+#### `/static/graphics/gameBG.jpg` and `/static/graphics/homeBG.jpeg`
+> From **Firewatch** | https://www.firewatchgame.com
+
+#### `/static/sounds/chase.mp3`
+> **Chase** by **Alexander Nakarada** | https://creatorchords.com  
+> Music promoted by https://www.chosic.com/free-music/all  
+> Attribution 4.0 International (CC BY 4.0)  
+> https://creativecommons.org/licenses/by/4.0
+
+#### `/static/sounds/dragonCastle.mp3`
+> **Dragon Castle** by **Makai Symphony** | https://soundcloud.com/makai-symphony  
+> Music promoted by https://www.chosic.com/free-music/all  
+> Creative Commons CC BY-SA 3.0  
+> https://creativecommons.org/licenses/by-sa/3.0
