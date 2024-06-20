@@ -13,7 +13,7 @@ body {
     height: 600px;
     position: relative;
     overflow: hidden;
-    background-image: url("/static/graphics/gameBG2.jpg");
+    background-image: url("/static/graphics/gameBG.jpg");
     background-position: center;
     background-size: cover;
     border-radius: 10px;

@@ -12,6 +12,10 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 db = SQL("sqlite:///arc.db")
+# create 'users' table
+db.execute("CREATE TABLE IF NOT EXISTS 'users' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'username' TEXT NOT NULL, 'hash' TEXT NOT NULL, 'highscore' INTEGER NOT NULL DEFAULT 0, 'title' TEXT NOT NULL DEFAULT 'Newbie')")
+# create 'games' table
+db.execute("CREATE TABLE IF NOT EXISTS 'games' ('id' INTEGER NOT NULL, 'username' TEXT NOT NULL, 'score' INTEGER NOT NULL DEFAULT 0, 'timestamp' DATETIME)")
 
 
 @app.after_request
