@@ -12,16 +12,16 @@ This project was done by Swagatam Pati for the 2024 Harvard CS50x online course:
 Here is a list of the various technologies I used in this project:
 
 ### Flask
-    The backend of the application is implemented using Flask. Python Flask is a lightweight and powerful web framework. It stands out for its simplicity, flexibility, and fine-grained control over its components, making it an ideal choice for my project.
+The backend of the application is implemented using Flask. Python Flask is a lightweight and powerful web framework. It stands out for its simplicity, flexibility, and fine-grained control over its components, making it an ideal choice for my project.
 
 ### Jinja
-    Jinja is the templating engine that I used for my project. Jinja is a fast, expressive, extensible templating engine. Special placeholders in the template allow writing code similar to Python syntax. Then the template is passed data to render the final document.
+Jinja is the templating engine that I used for my project. Jinja is a fast, expressive, extensible templating engine. Special placeholders in the template allow writing code similar to Python syntax. Then the template is passed data to render the final document.
 
 ### SQLite & SQLAlchemy
-    SQLite is a C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine. The ORM used is CS50's implementation of SQLAlchemy which made it possible to work with Python's own objects instead of writing separate SQL queries.
+SQLite is a C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine. The ORM used is CS50's implementation of SQLAlchemy which made it possible to work with Python's own objects instead of writing separate SQL queries.
 
 ### Bootstrap
-    Bootstrap is a CSS framework directed at responsive front-end web development. It contains HTML, CSS and JavaScript-based design templates for typography, forms, buttons, navigation, and other interface components.
+Bootstrap is a CSS framework directed at responsive front-end web development. It contains HTML, CSS and JavaScript-based design templates for typography, forms, buttons, navigation, and other interface components.
 
 ## Filesystem Explanation
 
