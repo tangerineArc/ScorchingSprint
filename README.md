@@ -68,7 +68,7 @@ Below is a list of all the folders and files that the project contains:
 
 #### `/static/graphics/runningDino.gif`
 > **Dino-4-Run** | https://dribbble.com/shots/4146682-Dino-4-Run  
-> Artowrk by **Gustavo Zanzero** | https://dribbble.com/zgus
+> Artwork by **Gustavo Zanzero** | https://dribbble.com/zgus
 
 #### `/static/graphics/dragon.gif`
 > **First animation: dragon flight** | https://www.deviantart.com/allmannerofbeasties/art/First-animation-dragon-flight-521575008  
