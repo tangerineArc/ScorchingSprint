@@ -1,7 +1,7 @@
 # Scorching Sprint
 
 **Scorching Sprint** is a web application/game which is inspired by the classic Chrome Dino game, but has a lot more features.
-Users have to create an account and sign in to the play the game. Their gameplay data is stored and the highest score is used to rank the players in a global leaderboard.
+Users have to create an account and sign in to play the game. Their gameplay data is stored and the highest score is used to rank the players in a global leaderboard.
 
 This project was done by **Swagatam Pati** for the **[2024 Harvard CS50x](https://cs50.harvard.edu/x/2024/)** online course: **Introduction to the Intellectual Enterprises of Computer Science & the Art of Programming**.
 
